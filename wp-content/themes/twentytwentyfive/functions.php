@@ -18,6 +18,7 @@ if ( ! function_exists( 'twentytwentyfive_post_format_setup' ) ) :
 	 *
 	 * @return void
 	 */
+
 	function twentytwentyfive_post_format_setup() {
 		add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
 	}
