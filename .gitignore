@@ -1,0 +1,21 @@
+# WordPress Core
+wp-admin/
+wp-includes/
+
+# WordPress tijdelijke bestanden
+*.log
+*.bak
+*.swp
+
+# macOS specifieke bestanden
+.DS_Store
+
+# Configuratiebestanden van je IDE (indien van toepassing)
+.idea/
+
+# Cachebestanden
+wp-content/cache/
+wp-content/backups/
+
+# Bestanden die niet gecommit moeten worden
+wp-config.php
