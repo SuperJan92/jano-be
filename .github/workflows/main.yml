@@ -1,47 +1,39 @@
-name: SSH Setup and Test Connection
+name: Deploy to Hostinger
 
 on:
   push:
     branches:
-      - main  # Of een andere branch waarop je de workflow wilt uitvoeren
+      - main  # Dit kan een andere branch zijn, afhankelijk van je setup
 
 jobs:
-  ssh-setup:
-    runs-on: ubuntu-latest  # Dit draait de job op een GitHub Actions runner met Ubuntu
+  deploy:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup SSH
+      - name: Set up SSH key
         run: |
           echo "Creating .ssh directory"
           mkdir -p $HOME/.ssh
-          echo "Adding server to known_hosts"
-          ssh-keyscan -p 65002 89.117.228.91 >> $HOME/.ssh/known_hosts
+          echo "Adding host key"
+          ssh-keyscan -t rsa 89.117.228.91 >> $HOME/.ssh/known_hosts
           echo "Host key added successfully"
           chmod 644 $HOME/.ssh/known_hosts
-          echo "Permissions updated"
-          ls -al $HOME/.ssh  # Controleer de inhoud van de .ssh directory
-          echo "Done with SSH setup"
+          ls -al $HOME/.ssh
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh-XXXXXXk5kYYc/agent.1780
+          SSH_AGENT_PID: 1781
 
-      - name: Add SSH private key to the agent
+      - name: Deploy to Hostinger using rsync
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "SSH private key added"
+          echo "Deploying files to Hostinger server"
+          rsync -avz --delete --exclude='.git*' ./ u503411290@89.117.228.91:/pad/naar/de/doelmap/
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Configure SSH settings
+      - name: Verify deployment
         run: |
-          echo "Host *" > ~/.ssh/config
-          echo "  Port 65002" >> ~/.ssh/config
-          echo "  User u503411290" >> ~/.ssh/config
-          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
-          echo "SSH config updated"
-
-      - name: Test SSH connection
-        run: |
-          ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 "echo 'SSH connection successful'"
-
-      - name: Done
-        run: echo "SSH setup complete and connection test passed"
+          echo "Verifying deployment on server"
+          ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 "echo 'Deployment successful'"
