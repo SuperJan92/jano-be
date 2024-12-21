@@ -1,45 +1,47 @@
-name: Deploy to Hostinger
+name: SSH Setup and Test Connection
 
 on:
   push:
     branches:
-      - main  # Zorg ervoor dat dit overeenkomt met de branch die je wilt deployen
+      - main  # Of een andere branch waarop je de workflow wilt uitvoeren
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  ssh-setup:
+    runs-on: ubuntu-latest  # Dit draait de job op een GitHub Actions runner met Ubuntu
 
     steps:
-      # Stap 1: Checkout de code uit je GitHub repository
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # Stap 2: Stel de SSH-configuratie in en voeg de host toe aan known_hosts
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Zorg ervoor dat je private key in GitHub secrets staat
-
-      # Stap 3: Test verbinding zonder ssh-keyscan
-      - name: Test SSH connection (without ssh-keyscan)
+      - name: Setup SSH
         run: |
-          echo "Pinging host to check connectivity"
-          ping -c 4 89.117.228.91 || { echo "Ping failed"; exit 1; }
-          echo "SSH Test connection"
-          ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 "echo 'SSH connection successful'"
-          echo "SSH connection test passed"
-
-      # Stap 4: Voeg de SSH-host toe aan known_hosts handmatig
-      - name: Manually add SSH host to known_hosts
-        run: |
+          echo "Creating .ssh directory"
           mkdir -p $HOME/.ssh
-          ssh-keyscan -t rsa 89.117.228.91 >> $HOME/.ssh/known_hosts || { echo "Failed to run ssh-keyscan"; exit 1; }
-          chmod 644 $HOME/.ssh/known_hosts || { echo "Failed to change permissions"; exit 1; }
-          echo "Host key added and permissions updated"
-          ls -al $HOME/.ssh
+          echo "Adding server to known_hosts"
+          ssh-keyscan -p 65002 89.117.228.91 >> $HOME/.ssh/known_hosts
+          echo "Host key added successfully"
+          chmod 644 $HOME/.ssh/known_hosts
+          echo "Permissions updated"
+          ls -al $HOME/.ssh  # Controleer de inhoud van de .ssh directory
+          echo "Done with SSH setup"
 
-      # Stap 5: Voer een simpel commando uit op de server via SSH om te testen
-      - name: Run command on Hostinger
+      - name: Add SSH private key to the agent
         run: |
-          ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 "hostname && date"
-          echo "Command execution on server complete"
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "SSH private key added"
+
+      - name: Configure SSH settings
+        run: |
+          echo "Host *" > ~/.ssh/config
+          echo "  Port 65002" >> ~/.ssh/config
+          echo "  User u503411290" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "SSH config updated"
+
+      - name: Test SSH connection
+        run: |
+          ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 "echo 'SSH connection successful'"
+
+      - name: Done
+        run: echo "SSH setup complete and connection test passed"
