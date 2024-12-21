@@ -158,4 +158,9 @@ if ( ! function_exists( 'twentytwentyfive_format_binding' ) ) :
 	}
 endif;
 
-/*HAAALOOO*/
+add_action('template_redirect', function() {
+      if (!is_admin() && !defined('DOING_AJAX') && !is_user_logged_in()) {
+            wp_redirect(site_url('wp-login.php'));
+            exit;
+      }
+});
