@@ -23,15 +23,22 @@ jobs:
       # Stap 3: Voeg de SSH-host toe aan known_hosts
       - name: Add SSH host to known_hosts
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -t rsa 89.117.228.91 >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-          ls -al ~/.ssh  # Controleer de inhoud van de .ssh directory
+          echo "Creating .ssh directory"
+          mkdir -p $HOME/.ssh
+          echo "Adding host key"
+          ssh-keyscan -t rsa 89.117.228.91 >> $HOME/.ssh/known_hosts
+          echo "Changing permissions of known_hosts"
+          chmod 644 $HOME/.ssh/known_hosts
+          echo "Listing .ssh directory"
+          ls -al $HOME/.ssh  # Controleer de inhoud van de .ssh directory
+          echo "Done with SSH setup"
 
       # Stap 4: Voer de deploy naar Hostinger uit via SSH
       - name: Deploy to Hostinger
         run: |
+          echo "Starting SSH deploy"
           ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 << 'EOF'
             cd /home/u503411290/domains/janvanerkel.nl/public_html/admin
             git pull origin main  # Trek de laatste wijzigingen op van de 'main' branch
           EOF
+          echo "Deploy complete"
