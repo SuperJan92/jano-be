@@ -13,6 +13,7 @@ wp-includes/
 # Configuratiebestanden van je IDE (indien van toepassing)
 .idea/
 
+
 # Cachebestanden
 wp-content/cache/
 wp-content/backups/
