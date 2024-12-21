@@ -18,8 +18,9 @@ jobs:
       - name: Add SSH host to known_hosts
         run: |
           mkdir -p $HOME/.ssh
-          ssh-keyscan -H 89.117.228.91 >> $HOME/.ssh/known_hosts
+          ssh-keyscan -t rsa 89.117.228.91 >> $HOME/.ssh/known_hosts
           chmod 644 $HOME/.ssh/known_hosts
+          ls -al $HOME/.ssh  # Controleer de inhoud van de .ssh directory
 
       # Stap 3: Stel de SSH-agent in en gebruik je private key voor authenticatie
       - name: Set up SSH
