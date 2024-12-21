@@ -1,4 +1,4 @@
-# WordPress Core
+# WordPress core
 wp-admin/
 wp-includes/
 
@@ -19,3 +19,6 @@ wp-content/backups/
 
 # Bestanden die niet gecommit moeten worden
 wp-config.php
+
+# CI/CD-pijplijnbestanden
+.github/
