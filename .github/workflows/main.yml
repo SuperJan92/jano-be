@@ -20,25 +20,23 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Zorg ervoor dat je private key in GitHub secrets staat
 
-      # Stap 3: Voeg de SSH-host toe aan known_hosts
-      - name: Add SSH host to known_hosts
+      # Stap 3: Test verbinding zonder ssh-keyscan
+      - name: Test SSH connection (without ssh-keyscan)
         run: |
-          echo "Creating .ssh directory"
-          mkdir -p $HOME/.ssh
-          echo "Adding host key"
-          ssh-keyscan -t rsa 89.117.228.91 >> $HOME/.ssh/known_hosts || { echo "Failed to run ssh-keyscan"; exit 1; }
-          echo "Host key added successfully"
-          cat $HOME/.ssh/known_hosts  # Bekijk het bestand om te controleren
-          chmod 644 $HOME/.ssh/known_hosts || { echo "Failed to change permissions"; exit 1; }
-          echo "Permissions updated"
-          ls -al $HOME/.ssh  # Controleer de inhoud van de .ssh directory
-          echo "Done with SSH setup"
-
-      # Stap 4: Test SSH-verbinding
-      - name: Test SSH connection
-        run: |
+          echo "Pinging host to check connectivity"
+          ping -c 4 89.117.228.91 || { echo "Ping failed"; exit 1; }
+          echo "SSH Test connection"
           ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 "echo 'SSH connection successful'"
           echo "SSH connection test passed"
+
+      # Stap 4: Voeg de SSH-host toe aan known_hosts handmatig
+      - name: Manually add SSH host to known_hosts
+        run: |
+          mkdir -p $HOME/.ssh
+          ssh-keyscan -t rsa 89.117.228.91 >> $HOME/.ssh/known_hosts || { echo "Failed to run ssh-keyscan"; exit 1; }
+          chmod 644 $HOME/.ssh/known_hosts || { echo "Failed to change permissions"; exit 1; }
+          echo "Host key added and permissions updated"
+          ls -al $HOME/.ssh
 
       # Stap 5: Voer een simpel commando uit op de server via SSH om te testen
       - name: Run command on Hostinger
