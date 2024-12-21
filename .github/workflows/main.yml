@@ -20,13 +20,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Zorg ervoor dat je private key in GitHub secrets staat
 
-      # Stap 3: Voeg de SSH-host toe aan known_hosts met extra logging en debug
+      # Stap 3: Voeg de SSH-host toe aan known_hosts zonder extra opties
       - name: Add SSH host to known_hosts
         run: |
           echo "Creating .ssh directory"
           mkdir -p $HOME/.ssh
           echo "Adding host key"
-          ssh-keyscan -t rsa -o StrictHostKeyChecking=no 89.117.228.91 || { echo "Failed to run ssh-keyscan"; exit 1; }
+          ssh-keyscan -t rsa 89.117.228.91 || { echo "Failed to run ssh-keyscan"; exit 1; }
           echo "Host key added successfully"
           cat $HOME/.ssh/known_hosts  # Bekijk het bestand om te controleren
           chmod 644 $HOME/.ssh/known_hosts || { echo "Failed to change permissions"; exit 1; }
