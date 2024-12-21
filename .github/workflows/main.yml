@@ -14,19 +14,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Stap 2: Maak de .ssh directory aan en voeg de host toe aan known_hosts
-      - name: Add SSH host to known_hosts
-        run: |
-          mkdir -p $HOME/.ssh
-          ssh-keyscan -t rsa 89.117.228.91 >> $HOME/.ssh/known_hosts
-          chmod 644 $HOME/.ssh/known_hosts
-          ls -al $HOME/.ssh  # Controleer de inhoud van de .ssh directory
-
-      # Stap 3: Stel de SSH-agent in en gebruik je private key voor authenticatie
-      - name: Set up SSH
+      # Stap 2: Stel de SSH-configuratie in en voeg de host toe aan known_hosts
+      - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Zorg ervoor dat je private key in GitHub secrets staat
+
+      # Stap 3: Voeg de SSH-host toe aan known_hosts
+      - name: Add SSH host to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -t rsa 89.117.228.91 >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          ls -al ~/.ssh  # Controleer de inhoud van de .ssh directory
 
       # Stap 4: Voer de deploy naar Hostinger uit via SSH
       - name: Deploy to Hostinger
