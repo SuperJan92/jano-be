@@ -22,5 +22,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 << 'EOF'
             cd /home/u503411290/domains/janvanerkel.nl/public_html/admin
-            git pull origin main
+            git fetch --all  # Zorg ervoor dat alle remote changes worden opgehaald
+            git status        # Toont de huidige status van de repository
+            git pull origin main  # Trek de laatste wijzigingen van de main branch
           EOF
