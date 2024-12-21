@@ -1,0 +1,26 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main  # Zorg ervoor dat dit overeenkomt met de branch die je wilt deployen
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Hostinger
+        run: |
+          ssh -o StrictHostKeyChecking=no -p 65002 u503411290@89.117.228.91 << 'EOF'
+            cd /home/u503411290/domains/janvanerkel.nl/public_html/admin
+            git pull origin main
+          EOF
