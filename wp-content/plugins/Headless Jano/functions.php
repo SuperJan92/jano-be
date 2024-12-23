@@ -182,3 +182,8 @@ add_action('admin_head', function () {
       <?php
 });
 
+// Verander de link van het login-logo naar een lege link
+add_filter('login_headerurl', function() {
+      return '#'; // Of gebruik je eigen URL, bijvoorbeeld: 'https://jouwwebsite.nl'
+});
+
