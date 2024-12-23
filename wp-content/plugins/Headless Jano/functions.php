@@ -149,11 +149,6 @@ add_action('login_enqueue_scripts', function() {
 add_action('admin_head', function () {
       ?>
         <style>
-            /* Verander de blauwe kleur naar oranje in het dashboard */
-            #adminmenu a, #adminmenu .wp-submenu a, .wp-core-ui .button-primary, .wp-core-ui .button, .widget-title {
-                color: white !important;
-            }
-
             #adminmenu li a:hover, .wp-core-ui .button-primary:hover, .wp-core-ui .button:hover {
                 background-color: #ff961a !important;
                 color: white !important;
@@ -169,7 +164,6 @@ add_action('admin_head', function () {
                 color: #ff961a !important;
             }
 
-            /* Verander de kleur van de "nieuw bericht" notificaties en andere badges */
             .update-plugins, .update-now {
                 background-color: #ff961a !important;
             }
