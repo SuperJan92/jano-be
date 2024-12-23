@@ -12,3 +12,19 @@ add_action('template_redirect', function() {
             exit;
       }
 });
+
+add_filter('template', function() {
+      return '__no_theme__';
+});
+
+add_filter('stylesheet', function() {
+      return '__no_theme__';
+});
+
+// Redirect frontend requests to the admin login page
+add_action('template_redirect', function() {
+      if (!is_admin()) {
+            wp_redirect(admin_url());
+            exit;
+      }
+});
