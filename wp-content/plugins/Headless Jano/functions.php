@@ -77,6 +77,7 @@ add_action('login_enqueue_scripts', function() {
             border-radius: 8px !important;
             padding: 30px !important;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important; /* Zachte schaduw voor diepte */
+            border: none !important;
         }
 
         /* Stijl voor de invoervelden */
@@ -136,5 +137,10 @@ add_action('login_enqueue_scripts', function() {
         p.forgetmenot {
             margin-bottom: 10px !important;
         }
+        .notice.notice-info.message {
+            background: #1e1e1e;
+            border-left: 4px solid #ff961a;
+            border-radius: 4px;
+}
     </style>';
 });
