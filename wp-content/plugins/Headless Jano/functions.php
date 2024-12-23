@@ -28,3 +28,8 @@ add_action('template_redirect', function() {
             exit;
       }
 });
+
+// Verwijder het Appearance menu-item
+add_action('admin_menu', function () {
+      remove_menu_page('themes.php'); // Verwijdert het "Weergave" menu
+});
