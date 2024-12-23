@@ -151,7 +151,7 @@ add_action('admin_head', function () {
         <style>
             /* Verander de blauwe kleur naar oranje in het dashboard */
             #adminmenu a, #adminmenu .wp-submenu a, .wp-core-ui .button-primary, .wp-core-ui .button, .widget-title {
-                color: #ff961a !important;
+                color: white !important;
             }
 
             #adminmenu li a:hover, .wp-core-ui .button-primary:hover, .wp-core-ui .button:hover {
@@ -172,6 +172,10 @@ add_action('admin_head', function () {
             /* Verander de kleur van de "nieuw bericht" notificaties en andere badges */
             .update-plugins, .update-now {
                 background-color: #ff961a !important;
+            }
+            #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu {
+                background: #e08417 !important;
+                color: #fff !important;
             }
         </style>
       <?php
