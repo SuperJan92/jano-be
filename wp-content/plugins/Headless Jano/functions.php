@@ -96,7 +96,7 @@ add_action('login_enqueue_scripts', function() {
             background-color: #ff961a !important; /* Oranje achtergrond */
             border-color: #e68800 !important; /* Oranje rand */
             color: #fff !important;
-            padding: 12px 20px !important;
+            padding: 4px !important; /* Aangepaste padding */
             font-size: 16px !important;
             width: 100% !important;
             border-radius: 4px !important;
@@ -107,7 +107,7 @@ add_action('login_enqueue_scripts', function() {
             background-color: #e68800 !important; /* Donkerder oranje bij hover */
             border-color: #d77c00 !important;
         }
-
+        
         .login #nav a,
         .login #backtoblog a {
             color: #ff961a !important; /* Oranje kleur voor links */
@@ -130,6 +130,11 @@ add_action('login_enqueue_scripts', function() {
             background-color: #1e1e1e !important;
             color: #f44336 !important; /* Foutmeldingen in rood */
             border-left: 3px solid #f44336 !important; /* Rood accent voor foutmeldingen */
+        }
+
+        /* Specifieke stijl voor de forgetmenot paragraph */
+        p.forgetmenot {
+            margin-bottom: 10px !important;
         }
     </style>';
 });
