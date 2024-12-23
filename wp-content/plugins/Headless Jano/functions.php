@@ -203,6 +203,9 @@ add_action('admin_head', function () {
             a.ab-item:hover::before {
                 color: #ff961a !important;
             }
+            #adminmenu li a:hover {
+                background: #2c3338 !important;
+            }
         </style>
       <?php
 });
