@@ -14,6 +14,13 @@ add_filter('stylesheet', function() {
       return '__no_theme__';
 });
 
+// SVG-bestanden toestaan in WordPress Media Library
+function allow_svg_uploads($mimes) {
+      $mimes['svg'] = 'image/svg+xml';
+      return $mimes;
+}
+add_filter('upload_mimes', 'allow_svg_uploads');
+
 // Verwijder het Appearance menu-item
 add_action('admin_menu', function () {
       remove_menu_page('themes.php'); // Verwijdert het "Weergave" menu
@@ -35,12 +42,12 @@ add_action('login_enqueue_scripts', function () {
       ?>
         <style>
             .login h1 a {
-                background-image: url('<?php echo plugins_url('media/login-logo.svg', __FILE__); ?>');
-                background-size: contain; /* Zorg dat het logo goed schaalt */
-                background-repeat: no-repeat; /* Zorg dat het logo niet herhaald wordt */
-                width: 200px; /* Pas de breedte van het logo aan */
-                height: 80px; /* Pas de hoogte van het logo aan */
-                margin-bottom: 20px; /* Optioneel: extra ruimte onder het logo */
+                background-image: url('<?php echo esc_url( home_url( '/wp-content/uploads/login-logo.svg' ) ); ?>');
+                background-size: contain;
+                background-repeat: no-repeat;
+                width: 200px;
+                height: 80px;
+                margin-bottom: 20px;
             }
         </style>
       <?php
