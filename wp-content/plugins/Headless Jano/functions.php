@@ -186,7 +186,7 @@ add_action('admin_head', function () {
                 text-shadow: none;
             }
             a {
-                color: #ff961a !Important;
+                color: #ff961a;
             }
             .wp-core-ui .button-link {
                 color: #ff961a !important;
