@@ -200,6 +200,9 @@ add_action('admin_head', function () {
             a.ab-item:hover span.ab-icon::before {
                 color: #ff961a !important;
             }
+            a.ab-item:hover::before {
+                color: #ff961a !important;
+            }
         </style>
       <?php
 });
