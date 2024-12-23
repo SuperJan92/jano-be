@@ -6,6 +6,20 @@
  * Author: Jan van Erkel
  */
 
+// Redirect de hele site naar de admin loginpagina
+add_action('template_redirect', function() {
+      // Controleer of de gebruiker niet al op de loginpagina is
+      if (!is_admin() && !is_login_page()) {
+            wp_redirect(admin_url());
+            exit;
+      }
+});
+
+// Controleer of de gebruiker op de loginpagina is
+function is_login_page() {
+      return isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false;
+}
+
 // Zet een leeg thema in, zodat WordPress geen thema probeert te laden
 add_filter('template', function() {
       return '';
