@@ -77,6 +77,7 @@ add_action('login_enqueue_scripts', function() {
             border-radius: 8px !important;
             padding: 30px !important;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important; /* Zachte schaduw voor diepte */
+            border:none !important;
         }
 
         /* Stijl voor de invoervelden */
@@ -113,7 +114,6 @@ add_action('login_enqueue_scripts', function() {
             background-color: #e68800 !important; /* Donkerder oranje bij hover */
             border-color: #d77c00 !important;
         }
-        
         .login #nav a,
         .login #backtoblog a {
             color: #ff961a !important; /* Oranje kleur voor links */
@@ -135,7 +135,7 @@ add_action('login_enqueue_scripts', function() {
         .login .success {
             background-color: #1e1e1e !important; /* Donkere achtergrond voor meldingen */
             color: #ff961a !important; /* Oranje tekst voor foutmeldingen */
-            border-left: 3px solid #ff961a !important; /* Oranje rand om meldingen */
+            border-left: 4px solid #72aee6 !important; /* Blauw gekleurde rand voor foutmeldingen */
             padding: 10px !important;
             border-radius: 5px !important;
         }
