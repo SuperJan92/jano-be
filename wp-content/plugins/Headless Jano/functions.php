@@ -52,18 +52,21 @@ add_filter('login_footer', function () {
       <?php
 });
 
-// Voeg het custom logo toe aan de loginpagina
-add_action('login_enqueue_scripts', function () {
-      ?>
-        <style>
-            .login h1 a {
-                background-image: url('<?php echo esc_url( home_url( '/Jano-be/wp-content/uploads/login-logo.svg' ) ); ?>');
-                background-size: contain;
-                background-repeat: no-repeat;
-                width: 200px;
-                height: 80px;
-                margin-bottom: 20px;
-            }
-        </style>
-      <?php
+// Voeg het aangepaste logo toe aan de loginpagina
+add_action('login_enqueue_scripts', function() {
+      // Vervang het logo
+      echo '<style>
+        .login h1 a {
+            background-image: url("https://admin.janvanerkel.nl/Jano-be/wp-content/uploads/login-logo.svg");
+            background-size: contain;
+            width: 100%;
+            height: 80px; /* Pas de hoogte aan naar wens */
+            background-repeat: no-repeat;
+        }
+
+        /* Achtergrondkleur voor de loginpagina */
+        body.login {
+            background-color: #101418;
+        }
+    </style>';
 });
