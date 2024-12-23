@@ -206,6 +206,9 @@ add_action('admin_head', function () {
             #adminmenu li a:hover {
                 background: #2c3338 !important;
             }
+            #wpadminbar #wp-admin-bar-wp-logo {
+                display: none;
+            }
         </style>
       <?php
 });
