@@ -41,4 +41,3 @@ add_filter('login_footer', function () {
 // Voeg het custom logo toe aan de loginpagina
 add_action('login_enqueue_scripts', function () {
 ?>
-<
