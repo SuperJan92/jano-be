@@ -51,13 +51,13 @@ add_filter('login_footer', function () {
         </style>
       <?php
 });
-
 // Voeg aangepaste styling toe aan de loginpagina
 add_action('login_enqueue_scripts', function() {
       echo '<style>
-        /* Algemene achtergrondkleur voor de loginpagina */
+        /* Algemene achtergrondkleur voor de loginpagina in dark mode */
         body.login {
-            background-color: #101418;
+            background-color: #121212; /* Donkere achtergrond voor de hele pagina */
+            color: #e0e0e0; /* Lichte tekstkleur */
         }
 
         /* Aangepast logo */
@@ -71,22 +71,22 @@ add_action('login_enqueue_scripts', function() {
             margin: 0 auto;
         }
 
-        /* Stijl voor de login container */
+        /* Stijl voor de login container (formulair) */
         .login form {
-            background-color: #1b2226; /* Donkere achtergrond voor het formulier */
+            background-color: #1e1e1e; /* Donkere achtergrond voor het formulier */
             border-radius: 8px;
             padding: 30px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); /* Zachte schaduw voor diepte */
         }
 
         /* Stijl voor de invoervelden */
         .login input[type="text"],
         .login input[type="password"] {
-            background-color: #2c353b; /* Donkerder veldachtergrond */
-            color: #f1f1f1; /* Witte tekst */
-            border: 1px solid #3d464e;
+            background-color: #333333; /* Donkere achtergrond voor de velden */
+            color: #e0e0e0; /* Lichte tekst in de invoervelden */
+            border: 1px solid #555555; /* Lichte rand om velden */
             border-radius: 4px;
-            padding: 10px;
+            padding: 12px 10px;
             width: 100%;
             font-size: 16px;
         }
@@ -110,20 +110,28 @@ add_action('login_enqueue_scripts', function() {
 
         .login #nav a,
         .login #backtoblog a {
-            color: #f1f1f1;
+            color: #e0e0e0; /* Lichte kleur voor links */
             text-decoration: none;
         }
 
         .login #nav a:hover,
         .login #backtoblog a:hover {
-            color: #0073aa;
+            color: #0073aa; /* Blauw bij hover */
         }
 
         /* Style voor de "Wachtwoord vergeten" link */
         .login .message {
-            background-color: #2c353b; /* Zelfde als de invoervelden */
-            color: #f1f1f1;
-            border-left: 3px solid #0073aa;
+            background-color: #333333; /* Zelfde als de invoervelden */
+            color: #e0e0e0;
+            border-left: 3px solid #0073aa; /* Blauw accent voor berichten */
+        }
+
+        /* Foutmeldingen of succesberichten */
+        .login .error,
+        .login .success {
+            background-color: #1e1e1e;
+            color: #f44336; /* Foutmeldingen in rood */
+            border-left: 3px solid #f44336; /* Rood accent voor foutmeldingen */
         }
     </style>';
-});
+});});
