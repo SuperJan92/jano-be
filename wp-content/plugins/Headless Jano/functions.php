@@ -53,6 +53,7 @@ add_filter('login_footer', function () {
 });
 
 // Voeg het aangepaste logo toe aan de loginpagina
+// Voeg het aangepaste logo toe aan de loginpagina
 add_action('login_enqueue_scripts', function() {
       // Vervang het logo
       echo '<style>
@@ -62,6 +63,8 @@ add_action('login_enqueue_scripts', function() {
             width: 100%;
             height: 80px; /* Pas de hoogte aan naar wens */
             background-repeat: no-repeat;
+            display: block; /* Zorgt ervoor dat de link een block-element is */
+            margin: 0 auto; /* Zorgt ervoor dat het logo in het midden komt */
         }
 
         /* Achtergrondkleur voor de loginpagina */
