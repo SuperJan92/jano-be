@@ -134,4 +134,4 @@ add_action('login_enqueue_scripts', function() {
             border-left: 3px solid #f44336; /* Rood accent voor foutmeldingen */
         }
     </style>';
-});});
+});
