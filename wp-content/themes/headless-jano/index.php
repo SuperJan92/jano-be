@@ -1,2 +1,2 @@
 <?php
-// Empty
+// Minimal index.php voor een headless thema
