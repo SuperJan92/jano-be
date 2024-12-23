@@ -5,20 +5,26 @@
  * Version: 1.0
  * Author: Jan van Erkel
  */
+/**
+ * Plugin Name: headless-jano
+ * Description: Custom functionality for the headless WordPress backend.
+ * Version: 1.0
+ * Author: Jan van Erkel
+ */
 
 // Zorg ervoor dat geen thema geladen wordt zonder een error te veroorzaken
 add_filter('template', function($template) {
       if (is_admin()) {
-            return $template;
+            return $template; // In admin is alles oké
       }
-      return '';  // Leeg zodat er geen thema geladen wordt
+      return 'twentytwentyone';  // Gebruik een default WordPress thema als fallback (of een ander thema naar keuze)
 });
 
 add_filter('stylesheet', function($stylesheet) {
       if (is_admin()) {
-            return $stylesheet;
+            return $stylesheet; // In admin is alles oké
       }
-      return '';  // Leeg zodat er geen stylesheet geladen wordt
+      return 'twentytwentyone';  // Gebruik hetzelfde thema voor de stylesheet als voor de template
 });
 
 // SVG-bestanden toestaan in WordPress Media Library
