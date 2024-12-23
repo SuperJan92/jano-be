@@ -33,3 +33,14 @@ add_action('template_redirect', function() {
 add_action('admin_menu', function () {
       remove_menu_page('themes.php'); // Verwijdert het "Weergave" menu
 });
+
+// Verwijder de "Go to [sitenaam]" link op de loginpagina
+add_filter('login_footer', function () {
+      ?>
+      <style>
+          .login #backtoblog {
+              display: none;
+          }
+      </style>
+      <?php
+});
