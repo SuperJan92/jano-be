@@ -171,6 +171,13 @@ add_action('admin_head', function () {
                 background: #e08417 !important;
                 color: #fff !important;
             }
+            #adminmenu li.current a, #adminmenu li.current a:focus, #adminmenu li.current a:hover {
+                background-color: none !important;
+                color: white !important;
+            }
+            .wp-menu-image.dashicons-before::before {
+                color: #ffffff !important;
+            }
         </style>
       <?php
 });
