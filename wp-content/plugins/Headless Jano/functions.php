@@ -73,11 +73,12 @@ add_action('login_enqueue_scripts', function() {
 
         /* Stijl voor de login container (formulair) */
         .login form {
-            background-color: #1e1e1e !important; /* Donkere achtergrond voor het formulier */
+            background-color: #1e1e1e !important;
             border-radius: 8px !important;
             padding: 30px !important;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important; /* Zachte schaduw voor diepte */
-        }
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+            border: none !important;
+        }       
 
         /* Stijl voor de invoervelden */
         .login input[type="text"],
