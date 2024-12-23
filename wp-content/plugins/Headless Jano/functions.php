@@ -172,7 +172,7 @@ add_action('admin_head', function () {
                 color: #fff !important;
             }
             #adminmenu li.current a, #adminmenu li.current a:focus, #adminmenu li.current a:hover {
-                background-color: none !important;
+                background-color: #2c3338 !important;
                 color: white !important;
             }
             .wp-menu-image.dashicons-before::before {
