@@ -6,20 +6,19 @@
  * Author: Jan van Erkel
  */
 
+// Zorg ervoor dat geen thema geladen wordt zonder een error te veroorzaken
 add_filter('template', function($template) {
-      // Gebruik geen thema, of een specifiek thema zoals twentytwentyone, als je dat wilt
-      if (!is_admin()) {
-            return '';  // Hiermee zorgt WordPress ervoor dat het geen thema laadt
+      if (is_admin()) {
+            return $template;
       }
-      return $template; // Laat het originele thema voor de admin-pagina's intact
+      return '';  // Leeg zodat er geen thema geladen wordt
 });
 
 add_filter('stylesheet', function($stylesheet) {
-      // Gebruik geen thema, of een specifiek thema zoals twentytwentyone, als je dat wilt
-      if (!is_admin()) {
-            return '';  // Zorgt ervoor dat er geen stylesheet wordt geladen
+      if (is_admin()) {
+            return $stylesheet;
       }
-      return $stylesheet; // Laat het originele stylesheet voor de admin-pagina's intact
+      return '';  // Leeg zodat er geen stylesheet geladen wordt
 });
 
 // SVG-bestanden toestaan in WordPress Media Library
@@ -59,4 +58,4 @@ add_action('login_enqueue_scripts', function () {
             }
         </style>
       <?php
-});
+}););
