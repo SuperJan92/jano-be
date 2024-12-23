@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Headless Jano
+ * Plugin Name: headless jano
  * Description: Custom functionality for the headless WordPress backend.
  * Version: 1.0
  * Author: Jan van Erkel
@@ -42,5 +42,21 @@ add_filter('login_footer', function () {
               display: none;
           }
       </style>
+      <?php
+});
+
+// Log-in logo
+add_action('login_enqueue_scripts', function () {
+      ?>
+        <style>
+            .login h1 a {
+                background-image: url('<?php echo content_url('headless/jano/media/login-logo.svg'); ?>');
+                background-size: contain; /* Zorg dat het logo goed schaalt */
+                background-repeat: no-repeat; /* Zorg dat het logo niet herhaald wordt */
+                width: 200px; /* Pas de breedte van het logo aan */
+                height: 80px; /* Pas de hoogte van het logo aan */
+                margin-bottom: 20px; /* Optioneel: extra ruimte onder het logo */
+            }
+        </style>
       <?php
 });
