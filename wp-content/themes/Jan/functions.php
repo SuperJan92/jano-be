@@ -1,6 +1,6 @@
 <?php
 /**
- * Functions for the Headless Jano theme
+ * Functions for the Jan theme
  */
 
 // Voorkom dat WordPress een thema probeert te laden
