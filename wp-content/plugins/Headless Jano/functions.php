@@ -30,14 +30,26 @@ add_action('admin_menu', function () {
 // Verwijder de "Go to [sitenaam]" link op de loginpagina
 add_filter('login_footer', function () {
       ?>
-      <style>
-          .login #backtoblog {
-              display: none;
-          }
-      </style>
+        <style>
+            .login #backtoblog {
+                display: none;
+            }
+        </style>
       <?php
 });
 
 // Voeg het custom logo toe aan de loginpagina
 add_action('login_enqueue_scripts', function () {
-?>
+      ?>
+        <style>
+            .login h1 a {
+                background-image: url('<?php echo esc_url( home_url( '/Jano-be/wp-content/uploads/login-logo.svg' ) ); ?>');
+                background-size: contain;
+                background-repeat: no-repeat;
+                width: 200px;
+                height: 80px;
+                margin-bottom: 20px;
+            }
+        </style>
+      <?php
+});
