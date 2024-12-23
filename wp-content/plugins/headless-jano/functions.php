@@ -50,7 +50,7 @@ add_action('login_enqueue_scripts', function () {
       ?>
         <style>
             .login h1 a {
-                background-image: url('<?php echo content_url('headless/jano/media/login-logo.svg'); ?>');
+                background-image: url('<?php echo plugins_url('media/login-logo.svg', __FILE__); ?>');
                 background-size: contain; /* Zorg dat het logo goed schaalt */
                 background-repeat: no-repeat; /* Zorg dat het logo niet herhaald wordt */
                 width: 200px; /* Pas de breedte van het logo aan */
