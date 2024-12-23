@@ -141,6 +141,39 @@ add_action('login_enqueue_scripts', function() {
             background: #1e1e1e;
             border-left: 4px solid #ff961a;
             border-radius: 4px;
-}
+        }
     </style>';
 });
+
+// Voeg aangepaste CSS toe aan het WordPress-dashboard
+add_action('admin_head', function () {
+      ?>
+        <style>
+            /* Verander de blauwe kleur naar oranje in het dashboard */
+            #adminmenu a, #adminmenu .wp-submenu a, .wp-core-ui .button-primary, .wp-core-ui .button, .widget-title {
+                color: #ff961a !important;
+            }
+
+            #adminmenu li a:hover, .wp-core-ui .button-primary:hover, .wp-core-ui .button:hover {
+                background-color: #ff961a !important;
+                color: white !important;
+            }
+
+            #adminmenu li.current a, #adminmenu li.current a:focus, #adminmenu li.current a:hover {
+                background-color: #72aee6 !important; /* Of je kunt dit aanpassen naar een andere kleur */
+                color: white !important;
+            }
+
+            /* Pas de kleur van de links in het dashboard aan */
+            #adminmenu a:focus, #adminmenu a:hover {
+                color: #ff961a !important;
+            }
+
+            /* Verander de kleur van de "nieuw bericht" notificaties en andere badges */
+            .update-plugins, .update-now {
+                background-color: #ff961a !important;
+            }
+        </style>
+      <?php
+});
+
