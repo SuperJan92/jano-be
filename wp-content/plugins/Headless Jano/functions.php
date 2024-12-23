@@ -194,6 +194,12 @@ add_action('admin_head', function () {
             .wp-core-ui .button-link {
                 color: #ff961a !important;
             }
+            a.ab-item:hover, a.ab-item:hover span {
+                color: #ff961a !Important;
+            }
+            a.ab-item:hover span.ab-icon::before {
+                color: #ff961a !important;
+            }
         </style>
       <?php
 });
