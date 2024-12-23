@@ -178,6 +178,19 @@ add_action('admin_head', function () {
             .wp-menu-image.dashicons-before::before {
                 color: #ffffff !important;
             }
+            .wp-core-ui .button-primary {
+                background: #ff961a !important;
+                border-color: #ff961a !important;
+                color: #fff;
+                text-decoration: none;
+                text-shadow: none;
+            }
+            a {
+                color: #ff961a !Important;
+            }
+            .wp-core-ui .button-link {
+                color: #ff961a !important;
+            }
         </style>
       <?php
 });
