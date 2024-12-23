@@ -6,12 +6,20 @@
  * Author: Jan van Erkel
  */
 
-add_filter('template', function() {
-      return '__no_theme__';
+add_filter('template', function($template) {
+      // Gebruik geen thema, of een specifiek thema zoals twentytwentyone, als je dat wilt
+      if (!is_admin()) {
+            return '';  // Hiermee zorgt WordPress ervoor dat het geen thema laadt
+      }
+      return $template; // Laat het originele thema voor de admin-pagina's intact
 });
 
-add_filter('stylesheet', function() {
-      return '__no_theme__';
+add_filter('stylesheet', function($stylesheet) {
+      // Gebruik geen thema, of een specifiek thema zoals twentytwentyone, als je dat wilt
+      if (!is_admin()) {
+            return '';  // Zorgt ervoor dat er geen stylesheet wordt geladen
+      }
+      return $stylesheet; // Laat het originele stylesheet voor de admin-pagina's intact
 });
 
 // SVG-bestanden toestaan in WordPress Media Library
@@ -29,11 +37,11 @@ add_action('admin_menu', function () {
 // Verwijder de "Go to [sitenaam]" link op de loginpagina
 add_filter('login_footer', function () {
       ?>
-      <style>
-          .login #backtoblog {
-              display: none;
-          }
-      </style>
+        <style>
+            .login #backtoblog {
+                display: none;
+            }
+        </style>
       <?php
 });
 
