@@ -23,9 +23,14 @@ add_filter('stylesheet', function() {
 
 // Redirect frontend requests to the admin login page
 add_action('template_redirect', function() {
-      if (!is_admin()) {
-            wp_redirect(admin_url());
-            exit;
+      // Alleen niet-ingelogde gebruikers omleiden naar de loginpagina, maar niet voor specifieke bestandstypes
+      if (!is_user_logged_in() && !defined('DOING_AJAX') && !is_admin()) {
+            // Als het geen statisch bestand is (zoals .svg), dan pas de redirect uitvoeren
+            $request_uri = $_SERVER['REQUEST_URI'];
+            if (strpos($request_uri, '.svg') === false && strpos($request_uri, '.png') === false) {
+                  wp_redirect(site_url('wp-login.php'));
+                  exit;
+            }
       }
 });
 
