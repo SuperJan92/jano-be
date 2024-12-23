@@ -6,6 +6,7 @@
  * Author: Jan van Erkel
  */
 
+/*
 add_action('template_redirect', function() {
       if (!is_admin() && !defined('DOING_AJAX') && !is_user_logged_in()) {
             wp_redirect(site_url('wp-login.php'));
@@ -44,8 +45,8 @@ add_filter('login_footer', function () {
       </style>
       <?php
 });
-
-// Log-in logo
+*/
+// Voeg het custom logo toe aan de loginpagina
 add_action('login_enqueue_scripts', function () {
       ?>
         <style>
