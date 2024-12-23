@@ -52,24 +52,78 @@ add_filter('login_footer', function () {
       <?php
 });
 
-// Voeg het aangepaste logo toe aan de loginpagina
-// Voeg het aangepaste logo toe aan de loginpagina
+// Voeg aangepaste styling toe aan de loginpagina
 add_action('login_enqueue_scripts', function() {
-      // Vervang het logo
       echo '<style>
+        /* Algemene achtergrondkleur voor de loginpagina */
+        body.login {
+            background-color: #101418;
+        }
+
+        /* Aangepast logo */
         .login h1 a {
-            background-image: url("https://admin.janvanerkel.nl/Jano-be/wp-content/uploads/login-logo.svg") !important;
+            background-image: url("https://admin.janvanerkel.nl/Jano-be/wp-content/uploads/login-logo.svg");
             background-size: contain;
             width: 100%;
             height: 80px; /* Pas de hoogte aan naar wens */
             background-repeat: no-repeat;
-            display: block; /* Zorgt ervoor dat de link een block-element is */
-            margin: 0 auto; /* Zorgt ervoor dat het logo in het midden komt */
+            display: block;
+            margin: 0 auto;
         }
 
-        /* Achtergrondkleur voor de loginpagina */
-        body.login {
-            background-color: #101418;
+        /* Stijl voor de login container */
+        .login form {
+            background-color: #1b2226; /* Donkere achtergrond voor het formulier */
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Stijl voor de invoervelden */
+        .login input[type="text"],
+        .login input[type="password"] {
+            background-color: #2c353b; /* Donkerder veldachtergrond */
+            color: #f1f1f1; /* Witte tekst */
+            border: 1px solid #3d464e;
+            border-radius: 4px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        /* Stijl voor de login knop */
+        .login .button-primary {
+            background-color: #0073aa; /* WordPress-blauw */
+            border-color: #006799;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login .button-primary:hover {
+            background-color: #006799;
+            border-color: #005f8b;
+        }
+
+        .login #nav a,
+        .login #backtoblog a {
+            color: #f1f1f1;
+            text-decoration: none;
+        }
+
+        .login #nav a:hover,
+        .login #backtoblog a:hover {
+            color: #0073aa;
+        }
+
+        /* Style voor de "Wachtwoord vergeten" link */
+        .login .message {
+            background-color: #2c353b; /* Zelfde als de invoervelden */
+            color: #f1f1f1;
+            border-left: 3px solid #0073aa;
         }
     </style>';
 });
