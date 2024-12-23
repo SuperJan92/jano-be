@@ -51,13 +51,13 @@ add_filter('login_footer', function () {
         </style>
       <?php
 });
+// Voeg aangepaste styling toe aan de loginpagina
 add_action('login_enqueue_scripts', function() {
       echo '<style>
         /* Algemene achtergrondkleur voor de loginpagina in dark mode */
         body.login {
             background-color: #121212 !important; /* Donkere achtergrond voor de hele pagina */
             color: #e0e0e0 !important; /* Lichte tekstkleur */
-            backdrop-filter: blur(10px) !important; /* Blur-effect voor de achtergrond */
         }
 
         /* Aangepast logo */
@@ -77,7 +77,6 @@ add_action('login_enqueue_scripts', function() {
             border-radius: 8px !important;
             padding: 30px !important;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important; /* Zachte schaduw voor diepte */
-            border:none !important;
         }
 
         /* Stijl voor de invoervelden */
@@ -85,17 +84,11 @@ add_action('login_enqueue_scripts', function() {
         .login input[type="password"] {
             background-color: #333333 !important; /* Donkere achtergrond voor de velden */
             color: #e0e0e0 !important; /* Lichte tekst in de invoervelden */
-            border: 1px solid #ff961a !important; /* Oranje rand om velden */
+            border: 1px solid #555555 !important; /* Lichte rand om velden */
             border-radius: 4px !important;
             padding: 12px 10px !important;
             width: 100% !important;
             font-size: 16px !important;
-        }
-
-        .login input[type="text"]:focus,
-        .login input[type="password"]:focus {
-            border-color: #ff961a !important; /* Oranje rand bij focus */
-            outline: none !important;
         }
 
         /* Stijl voor de login knop (oranje) */
@@ -114,6 +107,7 @@ add_action('login_enqueue_scripts', function() {
             background-color: #e68800 !important; /* Donkerder oranje bij hover */
             border-color: #d77c00 !important;
         }
+
         .login #nav a,
         .login #backtoblog a {
             color: #ff961a !important; /* Oranje kleur voor links */
@@ -133,34 +127,14 @@ add_action('login_enqueue_scripts', function() {
         /* Foutmeldingen of succesberichten */
         .login .error,
         .login .success {
-            background-color: #1e1e1e !important; /* Donkere achtergrond voor meldingen */
-            color: #ff961a !important; /* Oranje tekst voor foutmeldingen */
-            border-left: 4px solid #72aee6 !important; /* Blauw gekleurde rand voor foutmeldingen */
-            padding: 10px !important;
-            border-radius: 5px !important;
+            background-color: #1e1e1e !important;
+            color: #f44336 !important; /* Foutmeldingen in rood */
+            border-left: 3px solid #f44336 !important; /* Rood accent voor foutmeldingen */
         }
 
         /* Specifieke stijl voor de forgetmenot paragraph */
         p.forgetmenot {
             margin-bottom: 10px !important;
-        }
-
-        /* Maak de labels en foutmeldingen donkerder */
-        .login label {
-            color: #e0e0e0 !important; /* Lichte kleur voor labels */
-        }
-
-        /* Maak de input foutermeldingen donkerder */
-        .login .message,
-        .login .error {
-            background-color: #333333 !important; /* Donkerder achtergrond voor foutmeldingen */
-            color: #ff961a !important; /* Oranje tekstkleur voor fouten */
-        }
-
-        /* Aanpassingen voor de tekst boven de invoervelden */
-        .login label {
-            color: #e0e0e0 !important;
-            font-weight: bold !important;
         }
     </style>';
 });
