@@ -196,18 +196,16 @@ add_action('admin_head', function () {
             }
             /* Styling voor hover links in wp-admin bar */
             #wpadminbar a:hover, #wpadminbar .ab-item:hover, #wpadminbar .ab-sub-wrapper:hover {
-                background-color: #ff961a !important;
-                color: #fff !important;
+                color: #ff961a !important;
             }
 
             #wpadminbar a, #wpadminbar .ab-item {
-                color: #fff !important;
+                color: #ff961a !important;
             }
 
             /* Hover effect voor admin bar menu-items */
             #wpadminbar .ab-item:focus, #wpadminbar .ab-item:active, #wpadminbar .ab-item:hover {
-                color: #ffffff !important;
-                background-color: #ff961a !important;
+                color: #ff961a !important;
             }
         </style>
       <?php
