@@ -15,6 +15,41 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
+function check_api_key() {
+      // Controleer of de API sleutel wordt meegegeven
+      $api_key = $_SERVER['HTTP_X_API_KEY'] ?? ''; // Stuur de API key via een custom header 'X-API-KEY'
+
+      // Controleer of de API key klopt
+      if ($api_key !== $_ENV['MY_API_KEY']) {
+            wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
+      }
+}
+
+add_action('rest_api_init', function() {
+      // Voeg de API key verificatie toe aan de REST API voor specifieke endpoints
+      add_filter('rest_pre_dispatch', function($response, $server, $request) {
+            // De check_api_key functie uitvoeren bij elk verzoek naar de API
+            check_api_key();
+            return $response;
+      }, 10, 3);
+});
+
+function check_user_login() {
+      if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Unauthorized, please log in.'], 401); // Stuur een 401 fout als de gebruiker niet ingelogd is
+      }
+}
+
+add_action('rest_api_init', function() {
+      // Voeg een check toe voor ingelogde gebruikers
+      add_filter('rest_pre_dispatch', function($response, $server, $request) {
+            if (!is_user_logged_in()) {
+                  check_user_login();  // Controleer of de gebruiker ingelogd is
+            }
+            return $response;
+      }, 10, 3);
+});
+
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
             wp_redirect(admin_url());
