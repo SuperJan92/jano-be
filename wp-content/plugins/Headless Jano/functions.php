@@ -44,19 +44,6 @@ if ($api_key) {
       });
 }
 
-// Zorg ervoor dat je debugging aanzet
-if ( ! defined( 'WP_DEBUG' ) ) {
-      define( 'WP_DEBUG', true );
-}
-
-if ( ! defined( 'WP_DEBUG_LOG' ) ) {
-      define( 'WP_DEBUG_LOG', true );
-}
-
-if ( ! defined( 'WP_DEBUG_DISPLAY' ) ) {
-      define( 'WP_DEBUG_DISPLAY', false ); // Fouten niet op de pagina tonen
-}
-
 // Redirect de hele site naar de admin loginpagina
 add_action('template_redirect', function() {
       // Controleer of de gebruiker niet al op de loginpagina is
