@@ -19,12 +19,15 @@ $api_key = $_ENV['MY_API_KEY'] ?? null;
 function check_api_key() {
       // Controleer of het verzoek een REST API-verzoek is
       if (defined('REST_REQUEST') && REST_REQUEST) {
-            // Haal de API key op uit de custom header 'X-API-KEY'
-            $api_key = $_SERVER['HTTP_X_API_KEY'] ?? '';
+            // Als de gebruiker ingelogd is, doe de API-key check dan niet
+            if (!is_user_logged_in()) {
+                  // Haal de API key op uit de custom header 'X-API-KEY'
+                  $api_key = $_SERVER['HTTP_X_API_KEY'] ?? '';
 
-            // Controleer of de API key klopt
-            if ($api_key !== $_ENV['MY_API_KEY']) {
-                  wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
+                  // Controleer of de API key klopt
+                  if ($api_key !== $_ENV['MY_API_KEY']) {
+                        wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
+                  }
             }
       }
 }
@@ -32,7 +35,7 @@ function check_api_key() {
 add_action('rest_api_init', function() {
       // Voeg de API key verificatie toe aan de REST API voor specifieke endpoints
       add_filter('rest_pre_dispatch', function($response, $server, $request) {
-            // Alleen de check uitvoeren voor REST API-aanroepen
+            // Alleen de check uitvoeren voor REST API-aanroepen als de gebruiker niet is ingelogd
             check_api_key();
             return $response;
       }, 10, 3);
