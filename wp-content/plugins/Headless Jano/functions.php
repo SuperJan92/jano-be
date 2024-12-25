@@ -54,10 +54,6 @@ add_action('template_redirect', function() {
 function is_login_page() {
       return isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false;
 }
-// Functie om te controleren of het de login-pagina is
-function is_login_page() {
-      return isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false;
-}
 
 add_filter('template', function() {
       return '';
