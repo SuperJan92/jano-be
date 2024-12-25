@@ -238,6 +238,3 @@ add_action('admin_head', function () {
         </style>
       <?php
 });
-
-// Verander de link van het login-logo naar een lege link
-add_filter('login_headerurl', function() {
