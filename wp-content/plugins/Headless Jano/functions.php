@@ -13,13 +13,15 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(ABSPATH);
 $dotenv->load();
 
+// Haal de API key op uit het .env bestand, of gebruik een fallback als deze niet is gedefinieerd
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
 function check_api_key() {
       // Controleer of het verzoek een REST API-verzoek is en of de gebruiker niet ingelogd is (indien ingelogd moet geen API-key vereist zijn)
       if (defined('REST_REQUEST') && REST_REQUEST) {
             if (!is_user_logged_in()) { // Alleen voor niet-ingelogde gebruikers
-                  $api_key = $_SERVER['HTTP_X_API_KEY'] ?? ''; // Stuur de API key via een custom header 'X-API-KEY'
+                  // Haal de API key op uit de custom header 'X-API-KEY'
+                  $api_key = $_SERVER['HTTP_X_API_KEY'] ?? '';
 
                   // Controleer of de API key klopt
                   if ($api_key !== $_ENV['MY_API_KEY']) {
@@ -60,6 +62,7 @@ add_action('template_redirect', function() {
             exit;
       }
 });
+
 
 // Functie om te controleren of het de login-pagina is
 function is_login_page() {
