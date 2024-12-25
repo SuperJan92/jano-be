@@ -15,6 +15,8 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
+echo 'API Key: ' . $api_key; // Dit zal de API-sleutel op de pagina tonen
+
 add_action('rest_api_init', function() {
       // Voeg de API-sleutelvalidatie toe voor REST API-aanroepen
       add_filter('rest_authentication_errors', function($result) {
