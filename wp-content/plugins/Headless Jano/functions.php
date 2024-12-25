@@ -67,8 +67,19 @@ add_theme_support('menus');
 // Voeg ondersteuning voor widgets toe
 add_theme_support('widgets');
 
-// Verwijder de live preview functionaliteit voor menu's
-remove_action('customize_controls_init', 'wp_customize_add_live_preview');
+// Verberg de "Manage with Live Preview" knop
+add_action('admin_footer', function() {
+      ?>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                var livePreviewButton = document.querySelector('.page-title-action.hide-if-no-customize');
+                if (livePreviewButton) {
+                    livePreviewButton.style.display = 'none';
+                }
+            });
+        </script>
+      <?php
+});
 
 add_action('admin_menu', function() {
       add_menu_page(
