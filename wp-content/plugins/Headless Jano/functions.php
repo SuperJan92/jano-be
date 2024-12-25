@@ -8,16 +8,17 @@
 
 require_once __DIR__ . '/vendor/autoload.php'; // Zorg ervoor dat Composer autoloader is ingeladen
 
+use Dotenv\Dotenv;
+
+// Controleer of Dotenv geladen is
 if (class_exists('Dotenv\Dotenv')) {
       echo 'Dotenv is geladen!';
 } else {
       echo 'Dotenv is niet geladen!';
 }
 
-use Dotenv\Dotenv;
-
 // Laad het .env bestand vanuit de root van de WordPress installatie
-$dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
+$dotenv = Dotenv::createImmutable(ABSPATH);
 $dotenv->load();
 
 $api_key = getenv('MY_API_KEY'); // Lees de API-sleutel uit .env bestand
