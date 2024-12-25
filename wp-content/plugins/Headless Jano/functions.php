@@ -24,7 +24,7 @@ if (file_exists(ABSPATH . '.env')) {
 }
 
 // Laad het .env bestand vanuit de root van de WordPress installatie
-$dotenv = Dotenv::createImmutable(ABSPATH);
+$dotenv = Dotenv::createImmutable(ABSPATH . 'admin');
 $dotenv->load();
 
 // Log de API-sleutel naar de debug.log
