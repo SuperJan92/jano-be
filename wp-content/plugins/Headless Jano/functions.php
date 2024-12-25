@@ -15,28 +15,6 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
-echo 'API Key: ' . $api_key; // Dit zal de API-sleutel op de pagina tonen
-
-add_action('rest_api_init', function() {
-      // Voeg de API-sleutelvalidatie toe voor REST API-aanroepen
-      add_filter('rest_authentication_errors', function($result) {
-            // Zorg ervoor dat de validatie alleen voor de REST API is
-            if (strpos($_SERVER['REQUEST_URI'], '/wp-json/') === false) {
-                  return $result; // Geen validatie voor de admin of andere verzoeken
-            }
-
-            // Haal de API-sleutel uit de HTTP headers
-            $api_key = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : null;
-
-            // Als er geen API-sleutel is of deze onjuist is, geef een foutmelding terug
-            if (!$api_key || $api_key !== 'JOUW_API_SLEUTEL') {
-                  return new WP_Error('rest_forbidden', 'Forbidden', array('status' => 403));
-            }
-
-            return $result; // Geen fout, door naar de REST API
-      });
-});
-
 // Zorg ervoor dat admin-verzoeken geen interferentie ondervinden van de API-sleutelvalidatie
 add_action('init', function() {
       // Als het verzoek voor de backend komt, sla de API-sleutelvalidatie over
