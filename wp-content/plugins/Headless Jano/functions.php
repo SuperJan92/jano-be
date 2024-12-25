@@ -67,6 +67,9 @@ add_theme_support('menus');
 // Voeg ondersteuning voor widgets toe
 add_theme_support('widgets');
 
+// Schakel de Customizer uit
+remove_action('init', 'customize_register');
+
 add_action('admin_menu', function() {
       add_menu_page(
             'Menu Beheer',       // Titel van de pagina
