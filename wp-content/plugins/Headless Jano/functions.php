@@ -20,9 +20,10 @@ if (class_exists('Dotenv\Dotenv')) {
 // Laad het .env bestand vanuit de root van de WordPress installatie
 $dotenv = Dotenv::createImmutable(ABSPATH); // ABSPATH verwijst al naar de root van je WordPress-installatie
 $dotenv->load();
+var_dump(getenv('MY_API_KEY')); // Dit moet de waarde van de API sleutel printen
 
 // Haal de API-sleutel uit het .env bestand
-$api_key = getenv('MY_API_KEY'); // Zorg ervoor dat 'API_KEY' overeenkomt met de naam in je .env bestand
+$api_key = $_ENV['MY_API_KEY'] ?? null;
 
 // Log de API-sleutel naar de debug.log
 if ($api_key) {
