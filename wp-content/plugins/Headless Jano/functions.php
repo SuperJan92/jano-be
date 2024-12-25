@@ -57,7 +57,15 @@ function allow_svg_uploads($mimes) {
 }
 add_filter('upload_mimes', 'allow_svg_uploads');
 
+add_action('admin_menu', function () {
+      remove_menu_page('themes.php');
+});
 
+// Voeg ondersteuning voor menu's toe
+add_theme_support('menus');
+
+// Voeg ondersteuning voor widgets toe
+add_theme_support('widgets');
 
 add_action('admin_menu', function() {
       add_menu_page(
