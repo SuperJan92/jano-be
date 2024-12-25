@@ -67,8 +67,8 @@ add_theme_support('menus');
 // Voeg ondersteuning voor widgets toe
 add_theme_support('widgets');
 
-// Schakel de Customizer uit
-remove_action('init', 'customize_register');
+// Verwijder de live preview functionaliteit voor menu's
+remove_action('customize_controls_init', 'wp_customize_add_live_preview');
 
 add_action('admin_menu', function() {
       add_menu_page(
