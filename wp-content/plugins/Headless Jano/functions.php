@@ -17,6 +17,12 @@ if (class_exists('Dotenv\Dotenv')) {
       echo 'Dotenv is niet geladen!';
 }
 
+if (file_exists(ABSPATH . '.env')) {
+      echo '.env bestand gevonden!';
+} else {
+      echo '.env bestand niet gevonden!';
+}
+
 // Laad het .env bestand vanuit de root van de WordPress installatie
 $dotenv = Dotenv::createImmutable(ABSPATH);
 $dotenv->load();
