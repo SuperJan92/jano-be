@@ -15,9 +15,13 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
-// Controleer de API-sleutel voor elke REST API-aanroep
 add_action('rest_api_init', function() {
       add_filter('rest_authentication_errors', function($result) {
+            // Controleer of het verzoek komt van de REST API
+            if (!defined('REST_REQUEST') || !REST_REQUEST) {
+                  return $result; // Geen validatie voor de backend of andere verzoeken
+            }
+
             // Haal de API-sleutel uit de HTTP headers
             $api_key = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : null;
 
