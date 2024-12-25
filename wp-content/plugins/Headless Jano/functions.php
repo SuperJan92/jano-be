@@ -15,6 +15,22 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
+// Controleer de API-sleutel voor elke REST API-aanroep
+add_action('rest_api_init', function() {
+      add_filter('rest_authentication_errors', function($result) {
+            // Haal de API-sleutel uit de HTTP headers
+            $api_key = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : null;
+
+            // Als er geen API-sleutel is of deze onjuist is, geef een foutmelding terug
+            if (!$api_key || $api_key !== $_ENV['MY_API_KEY']) {
+                  return new WP_Error('rest_forbidden', 'Forbidden', array('status' => 403));
+            }
+
+            return $result; // Geen fout, door naar de REST API
+      });
+});
+
+// Redirect alle verzoeken naar de admin pagina, behalve de login
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
             wp_redirect(admin_url());
@@ -22,6 +38,7 @@ add_action('template_redirect', function() {
       }
 });
 
+// Functie om te controleren of het de login-pagina is
 function is_login_page() {
       return isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false;
 }
