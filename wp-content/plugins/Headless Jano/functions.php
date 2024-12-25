@@ -255,3 +255,6 @@ add_action('admin_head', function () {
         </style>
       <?php
 });
+
+$api_key = getenv('MY_API_KEY');
+echo 'API Key: ' . $api_key;
