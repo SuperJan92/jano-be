@@ -1,0 +1,5 @@
+{
+  "name": "intracto/acf_pro",
+  "description": "Use the Advanced Custom Fields plugin to take full control of your WordPress edit screens & custom field data",
+  "type": "wordpress-plugin"
+}
