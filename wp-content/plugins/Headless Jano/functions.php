@@ -22,7 +22,7 @@ $dotenv = Dotenv::createImmutable(ABSPATH); // ABSPATH verwijst al naar de root 
 $dotenv->load();
 
 // Haal de API-sleutel uit het .env bestand
-$api_key = getenv('API_KEY'); // Zorg ervoor dat 'API_KEY' overeenkomt met de naam in je .env bestand
+$api_key = getenv('MY_API_KEY'); // Zorg ervoor dat 'API_KEY' overeenkomt met de naam in je .env bestand
 
 // Log de API-sleutel naar de debug.log
 if ($api_key) {
