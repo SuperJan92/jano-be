@@ -81,10 +81,18 @@ add_action('admin_footer', function() {
       <?php
 });
 
-add_action('admin_menu', function () {
-      // Verwijder het standaard "Menu's" item
-      remove_menu_page('nav-menus.php');
+add_action('admin_menu', function() {
+      add_menu_page(
+            'Menu Beheer',       // Titel van de pagina
+            'Menu\'s',           // Titel in het admin menu
+            'manage_options',    // Vereiste capaciteit
+            'nav-menus.php',     // Het bestand dat de pagina laadt
+            '',                  // Functie om inhoud te laden (leeg laten)
+            'dashicons-menu'     // Icon voor het menu
+      );
+});
 
+add_action('admin_menu', function () {
       // Verwijder het "Comments" menu
       remove_menu_page('edit-comments.php');
 
@@ -101,7 +109,7 @@ add_action('admin_menu', function () {
       }
 
       // Voeg het 'Menu's' item opnieuw toe op de gewenste positie
-      array_splice($menu, 2, 0, $menus); // Plaatst 'Menu's' op de tweede positie in het menu
+      array_splice($menu, 2, 0, $menus); // Dit plaatst 'Menu's' op de tweede positie in het menu
 }, 10);
 
 add_filter('login_footer', function () {
