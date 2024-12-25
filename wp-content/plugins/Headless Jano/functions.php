@@ -16,13 +16,15 @@ $dotenv->load();
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
 function check_api_key() {
-      // Controleer of het verzoek een REST API-verzoek is
+      // Controleer of het verzoek een REST API-verzoek is en of de gebruiker niet ingelogd is (indien ingelogd moet geen API-key vereist zijn)
       if (defined('REST_REQUEST') && REST_REQUEST) {
-            $api_key = $_SERVER['HTTP_X_API_KEY'] ?? ''; // Stuur de API key via een custom header 'X-API-KEY'
+            if (!is_user_logged_in()) { // Alleen voor niet-ingelogde gebruikers
+                  $api_key = $_SERVER['HTTP_X_API_KEY'] ?? ''; // Stuur de API key via een custom header 'X-API-KEY'
 
-            // Controleer of de API key klopt
-            if ($api_key !== $_ENV['MY_API_KEY']) {
-                  wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
+                  // Controleer of de API key klopt
+                  if ($api_key !== $_ENV['MY_API_KEY']) {
+                        wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
+                  }
             }
       }
 }
