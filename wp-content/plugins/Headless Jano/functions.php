@@ -10,7 +10,8 @@ require_once __DIR__ . '/vendor/autoload.php'; // Zorg ervoor dat Composer autol
 
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(ABSPATH);
+// Laad het .env bestand vanuit de root van de WordPress installatie
+$dotenv = Dotenv\Dotenv::createImmutable(ABSPATH);
 $dotenv->load();
 
 $api_key = getenv('MY_API_KEY'); // Lees de API-sleutel uit .env bestand
@@ -96,94 +97,81 @@ add_filter('login_footer', function () {
 // Voeg aangepaste styling toe aan de loginpagina
 add_action('login_enqueue_scripts', function() {
       echo '<style>
-        /* Algemene achtergrondkleur voor de loginpagina in dark mode */
-        body.login {
-            background-color: #121212 !important; /* Donkere achtergrond voor de hele pagina */
-            color: #e0e0e0 !important; /* Lichte tekstkleur */
-        }
+    /* Algemene achtergrondkleur voor de loginpagina in dark mode */
+    body.login {
+        background-color: #121212 !important; /* Donkere achtergrond voor de hele pagina */
+        color: #e0e0e0 !important; /* Lichte tekstkleur */
+    }
 
-        /* Aangepast logo */
-        .login h1 a {
-            background-image: url("https://admin.janvanerkel.nl/Jano-be/wp-content/uploads/login-logo.svg") !important;
-            background-size: contain !important;
-            width: 100% !important;
-            height: 80px !important; /* Pas de hoogte aan naar wens */
-            background-repeat: no-repeat !important;
-            display: block;
-            margin: 0 auto;
-        }
+    /* Aangepast logo */
+    .login h1 a {
+        background-image: url("https://admin.janvanerkel.nl/Jano-be/wp-content/uploads/login-logo.svg") !important;
+        background-size: contain !important;
+        width: 100% !important;
+        height: 80px !important; /* Pas de hoogte aan naar wens */
+        background-repeat: no-repeat !important;
+        display: block;
+        margin: 0 auto;
+    }
 
-        /* Stijl voor de login container (formulair) */
-        .login form {
-            background-color: #1e1e1e !important; /* Donkere achtergrond voor het formulier */
-            border-radius: 8px !important;
-            padding: 30px !important;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important; /* Zachte schaduw voor diepte */
-            border: none !important;
-        }
+    /* Stijl voor de login container (formulair) */
+    .login form {
+        background-color: #1e1e1e !important; /* Donkere achtergrond voor het formulier */
+        border-radius: 8px !important;
+        padding: 30px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important; /* Zachte schaduw voor diepte */
+        border: none !important;
+    }
 
-        /* Stijl voor de invoervelden */
-        .login input[type="text"],
-        .login input[type="password"] {
-            background-color: #333333 !important; /* Donkere achtergrond voor de velden */
-            color: #e0e0e0 !important; /* Lichte tekst in de invoervelden */
-            border: 1px solid #555555 !important; /* Lichte rand om velden */
-            border-radius: 4px !important;
-            padding: 12px 10px !important;
-            width: 100% !important;
-            font-size: 16px !important;
-        }
+    /* Stijl voor de invoervelden */
+    .login input[type="text"],
+    .login input[type="password"] {
+        background-color: #333333 !important; /* Donkere achtergrond voor de velden */
+        color: #e0e0e0 !important; /* Lichte tekst in de invoervelden */
+        border: 1px solid #555555 !important; /* Lichte rand om velden */
+        border-radius: 4px !important;
+        padding: 12px 10px !important;
+        width: 100% !important;
+        font-size: 16px !important;
+    }
 
-        /* Stijl voor de login knop (oranje) */
-        .login .button-primary {
-            background-color: #ff961a !important; /* Oranje achtergrond */
-            border-color: #e68800 !important; /* Oranje rand */
-            color: #fff !important;
-            padding: 4px !important; /* Aangepaste padding */
-            font-size: 16px !important;
-            width: 100% !important;
-            border-radius: 4px !important;
-            transition: background-color 0.3s ease !important;
-        }
+    /* Stijl voor de login knop (oranje) */
+    .login .button-primary {
+        background-color: #ff961a !important; /* Oranje achtergrond */
+        border-color: #e68800 !important; /* Oranje rand */
+        color: #fff !important;
+        padding: 4px !important; /* Aangepaste padding */
+        font-size: 16px !important;
+        width: 100% !important;
+        border-radius: 4px !important;
+        transition: background-color 0.3s ease !important;
+    }
 
-        .login .button-primary:hover {
-            background-color: #e68800 !important; /* Donkerder oranje bij hover */
-            border-color: #d77c00 !important;
-        }
+    .login .button-primary:hover {
+        background-color: #e68800 !important; /* Donkerder oranje bij hover */
+        border-color: #d77c00 !important;
+    }
 
-        .login #nav a,
-        .login #backtoblog a {
-            color: #ff961a !important; /* Oranje kleur voor links */
-            text-decoration: none !important;
-        }
+    .login #nav a,
+    .login #backtoblog a {
+        color: #ff961a !important; /* Oranje kleur voor links */
+        text-decoration: none !important;
+    }
 
-        .login #nav a:hover,
-        .login #backtoblog a:hover {
-            color: #e68800 !important; /* Donkerder oranje bij hover */
-        }
+    .login #nav a:hover,
+    .login #backtoblog a:hover {
+        color: #e68800 !important; /* Donkerder oranje bij hover */
+    }
 
-        /* Style voor de "Wachtwoord vergeten" link */
-        .login #nav {
-            text-align: center !important; /* Centraal uitlijnen van de link */
-        }
-
-        /* Foutmeldingen of succesberichten */
-        .login .error,
-        .login .success {
-            background-color: #1e1e1e !important;
-            color: #f44336 !important; /* Foutmeldingen in rood */
-            border-left: 3px solid #f44336 !important; /* Rood accent voor foutmeldingen */
-        }
-
-        /* Specifieke stijl voor de forgetmenot paragraph */
-        p.forgetmenot {
-            margin-bottom: 10px !important;
-        }
-        .notice.notice-info.message {
-            background: #1e1e1e;
-            border-left: 4px solid #ff961a;
-            border-radius: 4px;
-        }
+    /* Specifieke stijl voor de forgetmenot paragraph */
+    p.forgetmenot {
+        margin-bottom: 10px !important;
+    }
+    .notice.notice-info.message {
+        background: #1e1e1e;
+        border-left: 4px solid #ff961a;
+        border-radius: 4px;
+    }
     </style>';
 });
 
