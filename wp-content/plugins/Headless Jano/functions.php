@@ -17,15 +17,12 @@ if (class_exists('Dotenv\Dotenv')) {
       echo 'Dotenv is niet geladen!';
 }
 
-if (file_exists(ABSPATH . '.env')) {
-      echo '.env bestand gevonden!';
-} else {
-      echo '.env bestand niet gevonden!';
-}
-
 // Laad het .env bestand vanuit de root van de WordPress installatie
-$dotenv = Dotenv::createImmutable(ABSPATH); // ABSPATH verwijst al naar de root van je WordPress-installatie, dus voeg 'admin' niet opnieuw toe
+$dotenv = Dotenv::createImmutable(ABSPATH); // ABSPATH verwijst al naar de root van je WordPress-installatie
 $dotenv->load();
+
+// Haal de API-sleutel uit het .env bestand
+$api_key = getenv('API_KEY'); // Zorg ervoor dat 'API_KEY' overeenkomt met de naam in je .env bestand
 
 // Log de API-sleutel naar de debug.log
 if ($api_key) {
