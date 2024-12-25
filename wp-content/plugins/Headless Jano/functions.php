@@ -15,14 +15,6 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
-// Zorg ervoor dat admin-verzoeken geen interferentie ondervinden van de API-sleutelvalidatie
-add_action('init', function() {
-      // Als het verzoek voor de backend komt, sla de API-sleutelvalidatie over
-      if (is_admin()) {
-            return;
-      }
-});
-
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
             wp_redirect(admin_url());
