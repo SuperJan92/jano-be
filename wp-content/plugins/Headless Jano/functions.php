@@ -81,11 +81,11 @@ add_action('admin_footer', function() {
       <?php
 });
 
-add_action('admin_menu', function() {
+add_action('admin_menu', function () {
       // Verwijder Comments menu
       remove_menu_page('edit-comments.php');
 
-      // Verplaats "Menu's" naar een hogere positie
+      // Verplaats het "Menu's" item naar een hogere positie
       global $menu;
 
       // Haal het 'Menu's' item uit de array
@@ -97,8 +97,8 @@ add_action('admin_menu', function() {
             }
       }
 
-      // Voeg het 'Menu's' item opnieuw toe op een hogere positie
-      array_splice($menu, 2, 0, $menus); // 2 is de gewenste positie voor "Menu's"
+      // Voeg het 'Menu's' item opnieuw toe op de gewenste positie
+      array_splice($menu, 2, 0, $menus); // Dit plaatst 'Menu's' op de tweede positie in het menu
 }, 10);
 
 add_action('admin_menu', function() {
