@@ -15,6 +15,34 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
+add_action('rest_api_init', function() {
+      // Voeg een filter toe om de authenticatie te controleren voor REST API-aanroepen
+      add_filter('rest_authentication_errors', function($result) {
+            // Controleer of het een REST API-aanroep is
+            if (!defined('REST_REQUEST') || !REST_REQUEST) {
+                  return $result; // Geen validatie voor andere verzoeken (zoals admin)
+            }
+
+            // Haal de API-sleutel uit de HTTP headers
+            $api_key = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : null;
+
+            // Controleer of de API-sleutel aanwezig en correct is
+            if (!$api_key || $api_key !== $_ENV['MY_API_KEY']) {
+                  return new WP_Error('rest_forbidden', 'Forbidden', array('status' => 403));
+            }
+
+            return $result; // Geen fout, doorgaan naar de REST API
+      });
+});
+
+// Zorg ervoor dat de admin-verzoeken niet worden beïnvloed door de API-sleutelvalidatie
+add_action('init', function() {
+      // Als we in de backend/admin omgeving zitten, willen we de validatie niet uitvoeren
+      if (is_admin()) {
+            return;
+      }
+});
+
 // Redirect alle verzoeken naar de admin pagina, behalve de login
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
