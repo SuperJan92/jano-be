@@ -17,16 +17,14 @@ $dotenv->load();
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
 function check_api_key() {
-      // Controleer of het verzoek een REST API-verzoek is en of de gebruiker niet ingelogd is (indien ingelogd moet geen API-key vereist zijn)
+      // Controleer of het verzoek een REST API-verzoek is
       if (defined('REST_REQUEST') && REST_REQUEST) {
-            if (!is_user_logged_in()) { // Alleen voor niet-ingelogde gebruikers
-                  // Haal de API key op uit de custom header 'X-API-KEY'
-                  $api_key = $_SERVER['HTTP_X_API_KEY'] ?? '';
+            // Haal de API key op uit de custom header 'X-API-KEY'
+            $api_key = $_SERVER['HTTP_X_API_KEY'] ?? '';
 
-                  // Controleer of de API key klopt
-                  if ($api_key !== $_ENV['MY_API_KEY']) {
-                        wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
-                  }
+            // Controleer of de API key klopt
+            if ($api_key !== $_ENV['MY_API_KEY']) {
+                  wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
             }
       }
 }
@@ -40,29 +38,12 @@ add_action('rest_api_init', function() {
       }, 10, 3);
 });
 
-function check_user_login() {
-      if (!is_user_logged_in()) {
-            wp_send_json_error(['message' => 'Unauthorized, please log in.'], 401); // Stuur een 401 fout als de gebruiker niet ingelogd is
-      }
-}
-
-add_action('rest_api_init', function() {
-      // Voeg een check toe voor ingelogde gebruikers
-      add_filter('rest_pre_dispatch', function($response, $server, $request) {
-            if (!is_user_logged_in()) {
-                  check_user_login();  // Controleer of de gebruiker ingelogd is
-            }
-            return $response;
-      }, 10, 3);
-});
-
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
             wp_redirect(admin_url());
             exit;
       }
 });
-
 
 // Functie om te controleren of het de login-pagina is
 function is_login_page() {
