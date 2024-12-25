@@ -17,7 +17,8 @@ $api_key = $_ENV['MY_API_KEY'] ?? null;
 
 add_action('rest_api_init', function() {
       add_filter('rest_authentication_errors', function($result) {
-            // Controleer of de aanvraag naar de REST API gaat (door '/wp-json/' in de URL te zoeken)
+            // Controleer of de aanvraag daadwerkelijk een REST API-aanroep is
+            // Dit gebeurt alleen als de request URI '/wp-json/' bevat
             if (strpos($_SERVER['REQUEST_URI'], '/wp-json/') === false) {
                   return $result; // Geen validatie voor de backend of andere verzoeken
             }
@@ -34,21 +35,31 @@ add_action('rest_api_init', function() {
       });
 });
 
-// Zorg ervoor dat de admin-functies en andere pagina-updates niet worden beïnvloed door deze filter
-add_filter('rest_request_after_callbacks', function($response, $handler, $request) {
-      // Als de aanvraag geen REST API-aanroep is, doe dan niets
-      if (strpos($_SERVER['REQUEST_URI'], '/wp-json/') === false) {
-            return $response;
+// Zorg ervoor dat de admin-verzoeken geen interferentie ervaren van de API-sleutelvalidatie
+add_action('init', function() {
+      // Sla de API-sleutelvalidatie over voor normale admin-pagina's
+      if (is_admin()) {
+            return;
       }
 
-      // Anders, als het een API-aanroep is, controleer de API-sleutel opnieuw
-      $api_key = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : null;
-      if (!$api_key || $api_key !== $_ENV['MY_API_KEY']) {
-            return new WP_Error('rest_forbidden', 'Forbidden', array('status' => 403));
-      }
+      // Pas de API-sleutelvalidatie alleen toe voor verzoeken die naar de REST API gaan
+      add_filter('rest_authentication_errors', function($result) {
+            // Controleer of de aanvraag een REST API-aanroep is
+            if (strpos($_SERVER['REQUEST_URI'], '/wp-json/') === false) {
+                  return $result; // Geen validatie voor de backend of andere verzoeken
+            }
 
-      return $response;
-}, 10, 3);
+            // Haal de API-sleutel uit de HTTP headers
+            $api_key = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : null;
+
+            // Als er geen API-sleutel is of deze onjuist is, geef een foutmelding terug
+            if (!$api_key || $api_key !== $_ENV['MY_API_KEY']) {
+                  return new WP_Error('rest_forbidden', 'Forbidden', array('status' => 403));
+            }
+
+            return $result; // Geen fout, door naar de REST API
+      });
+});
 
 // Redirect alle verzoeken naar de admin pagina, behalve de login
 add_action('template_redirect', function() {
