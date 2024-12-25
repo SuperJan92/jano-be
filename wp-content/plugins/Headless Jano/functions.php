@@ -15,24 +15,6 @@ $dotenv->load();
 
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
-if ($api_key) {
-      add_action('admin_footer', function() use ($api_key) {
-            ?>
-              <script type="text/javascript">
-                  alert("API Key Loaded: <?php echo esc_js($api_key); ?>");
-              </script>
-            <?php
-      });
-} else {
-      add_action('admin_footer', function() {
-            ?>
-              <script type="text/javascript">
-                  alert("API Key is not set or not found!");
-              </script>
-            <?php
-      });
-}
-
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
             wp_redirect(admin_url());
