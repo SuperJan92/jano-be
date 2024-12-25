@@ -11,8 +11,25 @@ require_once __DIR__ . '/vendor/autoload.php'; // Zorg ervoor dat Composer autol
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(ABSPATH);
+$dotenv->load();
 
 $api_key = getenv('MY_API_KEY'); // Lees de API-sleutel uit .env bestand
+
+// Log de API-sleutel naar de debug.log
+error_log('API Key: ' . $api_key);
+
+// Zorg ervoor dat je debugging aanzet
+if ( ! defined( 'WP_DEBUG' ) ) {
+      define( 'WP_DEBUG', true );
+}
+
+if ( ! defined( 'WP_DEBUG_LOG' ) ) {
+      define( 'WP_DEBUG_LOG', true );
+}
+
+if ( ! defined( 'WP_DEBUG_DISPLAY' ) ) {
+      define( 'WP_DEBUG_DISPLAY', false ); // Fouten niet op de pagina tonen
+}
 
 // Redirect de hele site naar de admin loginpagina
 add_action('template_redirect', function() {
@@ -224,5 +241,3 @@ add_action('admin_head', function () {
 
 // Verander de link van het login-logo naar een lege link
 add_filter('login_headerurl', function() {
-      return '#'; // Of gebruik je eigen URL, bijvoorbeeld: 'https://jouwwebsite.nl'
-});
