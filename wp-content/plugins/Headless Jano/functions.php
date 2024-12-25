@@ -57,10 +57,6 @@ function allow_svg_uploads($mimes) {
 }
 add_filter('upload_mimes', 'allow_svg_uploads');
 
-add_action('admin_menu', function () {
-      remove_menu_page('themes.php');
-});
-
 add_filter('login_footer', function () {
       ?>
         <style>
