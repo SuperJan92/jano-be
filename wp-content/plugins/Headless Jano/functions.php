@@ -38,6 +38,27 @@ if ($api_key) {
               </script>
             <?php
       });
+      error_log('API Key Loaded: ' . $api_key); // Debug output naar debug.log
+} else {
+      add_action('admin_footer', function() {
+            ?>
+              <script type="text/javascript">
+                  alert("API Key is not set or not found!");
+              </script>
+            <?php
+      });
+      error_log('API Key is not set or not found!'); // Debug output naar debug.log
+}
+
+// Log de API-sleutel naar de debug.log
+if ($api_key) {
+      add_action('admin_footer', function() use ($api_key) {
+            ?>
+              <script type="text/javascript">
+                  alert("API Key Loaded: <?php echo esc_js($api_key); ?>");
+              </script>
+            <?php
+      });
 } else {
       add_action('admin_footer', function() {
             ?>
@@ -255,6 +276,3 @@ add_action('admin_head', function () {
         </style>
       <?php
 });
-
-$api_key = getenv('MY_API_KEY');
-echo 'API Key: ' . $api_key;
