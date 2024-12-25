@@ -38,6 +38,7 @@ add_action('rest_api_init', function() {
       }, 10, 3);
 });
 
+// Zorg ervoor dat de standaard WordPress backend geen restricties heeft
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
             wp_redirect(admin_url());
