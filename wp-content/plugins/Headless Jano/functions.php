@@ -8,6 +8,12 @@
 
 require_once __DIR__ . '/vendor/autoload.php'; // Zorg ervoor dat Composer autoloader is ingeladen
 
+if (class_exists('Dotenv\Dotenv')) {
+      echo 'Dotenv is geladen!';
+} else {
+      echo 'Dotenv is niet geladen!';
+}
+
 use Dotenv\Dotenv;
 
 // Laad het .env bestand vanuit de root van de WordPress installatie
