@@ -6,6 +6,14 @@
  * Author: Jan van Erkel
  */
 
+require_once __DIR__ . '/vendor/autoload.php'; // Zorg ervoor dat Composer autoloader is ingeladen
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(ABSPATH);
+
+$api_key = getenv('MY_API_KEY'); // Lees de API-sleutel uit .env bestand
+
 // Redirect de hele site naar de admin loginpagina
 add_action('template_redirect', function() {
       // Controleer of de gebruiker niet al op de loginpagina is
@@ -51,6 +59,7 @@ add_filter('login_footer', function () {
         </style>
       <?php
 });
+
 // Voeg aangepaste styling toe aan de loginpagina
 add_action('login_enqueue_scripts', function() {
       echo '<style>
@@ -217,4 +226,3 @@ add_action('admin_head', function () {
 add_filter('login_headerurl', function() {
       return '#'; // Of gebruik je eigen URL, bijvoorbeeld: 'https://jouwwebsite.nl'
 });
-
