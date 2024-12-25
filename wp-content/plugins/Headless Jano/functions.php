@@ -16,7 +16,23 @@ $dotenv->load();
 $api_key = getenv('MY_API_KEY'); // Lees de API-sleutel uit .env bestand
 
 // Log de API-sleutel naar de debug.log
-error_log('API Key: ' . $api_key);
+if ($api_key) {
+      add_action('admin_footer', function() use ($api_key) {
+            ?>
+              <script type="text/javascript">
+                  alert("API Key Loaded: <?php echo esc_js($api_key); ?>");
+              </script>
+            <?php
+      });
+} else {
+      add_action('admin_footer', function() {
+            ?>
+              <script type="text/javascript">
+                  alert("API Key is not set or not found!");
+              </script>
+            <?php
+      });
+}
 
 // Zorg ervoor dat je debugging aanzet
 if ( ! defined( 'WP_DEBUG' ) ) {
