@@ -4,7 +4,7 @@ function wpdocs_allowed_block_types( $block_editor_context, $editor_context ) {
             return array(
                   'core/heading',
                   'core/list',
-                  'heroblock', // Voeg je eigen blok hier toe
+                  'core/heroblock', // Voeg je eigen blok hier toe
             );
       }
 
