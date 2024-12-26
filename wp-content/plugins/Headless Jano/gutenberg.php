@@ -1,17 +1,14 @@
 <?php
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      // Debug: Check de waarde van $allowed_blocks
-      if ( is_array( $allowed_blocks ) ) {
-            echo '<pre>';
-            print_r($allowed_blocks);  // Print de lijst van alle toegestane blokken
-            echo '</pre>';
-      } else {
-            echo 'De waarde van $allowed_blocks is niet een array: ' . var_export( $allowed_blocks, true );
-      }
+      // Debug: Toon de waarde van $allowed_blocks
+      echo '<pre>';
+      print_r($allowed_blocks);  // Dit toont de lijst van alle toegestane blokken
+      echo '</pre>';
 
-      return array( 'heroo' );  // Alleen jouw blok wordt weergegeven
+      // Alleen jouw blok zichtbaar maken
+      return array( 'heroo' );  // Zorg ervoor dat 'heroo' overeenkomt met jouw bloknaam
 }
-add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
+add_filter( 'allowed_block_types', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
 
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
