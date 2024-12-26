@@ -1,22 +1,19 @@
 <?php
-// Register de REST API route
-function register_hero_rest_route() {
-      register_rest_route('my_namespace/v1', '/hero/', array(
-            'methods' => 'GET',
-            'callback' => 'get_hero_block',
+// Registreer het Hero block
+function register_hero_block() {
+      // Zorg ervoor dat Gutenberg beschikbaar is
+      if( ! function_exists('register_block_type') ) {
+            return;
+      }
+
+      // Registreer het block zonder render callback
+      register_block_type('my_namespace/hero', array(
+            'editor_script' => 'hero-block-editor',  // Dit is je editor script als je dat gebruikt
+            'category' => 'common',                   // Je kunt dit aanpassen aan de gewenste categorie in Gutenberg
+            'icon' => 'star-filled',                  // Je kunt hier een ander icoon gebruiken
+            'keywords' => array( 'hero', 'intro' ),  // Dit zijn de zoekwoorden in de editor
       ));
 }
 
-// Haal de ACF velden op
-function get_hero_block() {
-      $hero_title = get_field('hero_title', 'option');
-      $hero_text = get_field('hero_text', 'option');
-
-      return rest_ensure_response(array(
-            'hero_title' => $hero_title,
-            'hero_text' => $hero_text,
-      ));
-}
-
-// Voeg de registratie toe aan 'rest_api_init' hook
-add_action('rest_api_init', 'register_hero_rest_route');
+// Voeg de registratie toe aan de init hook
+add_action('init', 'register_hero_block');
