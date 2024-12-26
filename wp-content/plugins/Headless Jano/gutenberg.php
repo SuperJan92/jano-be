@@ -1,4 +1,6 @@
 <?php
+// Dit is een debugregel
+echo 'Hero block file loaded';
 // Zet alle Gutenberg blokken uit
 function disable_all_gutenberg_blocks() {
       // Haal alle geregistreerde blokken op
