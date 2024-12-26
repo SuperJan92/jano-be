@@ -1,6 +1,7 @@
 <?php
 // Dit is een debugregel
-echo 'Hero block file loaded';
+echo 'Hero block filssssse loaded';
+
 // Zet alle Gutenberg blokken uit
 function disable_all_gutenberg_blocks() {
       // Haal alle geregistreerde blokken op
@@ -11,4 +12,4 @@ function disable_all_gutenberg_blocks() {
             unregister_block_type( $block_name );
       }
 }
-add_action( 'init', 'disable_all_gutenberg_blocks', 100 );
+add_action( 'wp_loaded', 'disable_all_gutenberg_blocks', 100 );
