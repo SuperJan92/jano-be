@@ -5,7 +5,6 @@ function register_hero_block() {
                   'name'            => 'heroblock',
                   'title'           => __('Hero Block'),
                   'description'     => __('Een hero block met ACF-velden'),
-                  'render_template' => 'block-hero.php',
                   'category'        => 'common',
                   'icon'            => 'alignfull',
                   'keywords'        => array( 'hero', 'header' ),
