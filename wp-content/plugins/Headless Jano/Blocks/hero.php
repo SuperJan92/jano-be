@@ -1,4 +1,5 @@
 <?php
+echo'halo';
 // Registreer het Hero block
 function register_hero_block() {
       // Zorg ervoor dat Gutenberg beschikbaar is
