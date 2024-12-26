@@ -1,17 +1,16 @@
 <?php
-function wpdocs_allowed_block_types( $block_editor_context, $editor_context ) {
-      if ( ! empty( $editor_context->post ) ) {
-            return array(
-                  'core/heading',
-                  'core/list',
-                  'core/heroblock', // Voeg je eigen blok hier toe
-            );
-      }
+function echo_all_registered_blocks() {
+      // Haal alle geregistreerde blokken op
+      $registered_blocks = get_registered_block_types();
 
-      return $block_editor_context;
+      // Loop door de geregistreerde blokken en echo de naam
+      foreach ( $registered_blocks as $block ) {
+            echo '<p>' . esc_html( $block->name ) . '</p>';
+      }
 }
 
-add_filter( 'allowed_block_types_all', 'wpdocs_allowed_block_types', 10, 2 );
+// Voeg de functie toe aan een actie die wordt uitgevoerd in de editor, bijvoorbeeld 'admin_notices'
+add_action( 'admin_notices', 'echo_all_registered_blocks' );
 
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
