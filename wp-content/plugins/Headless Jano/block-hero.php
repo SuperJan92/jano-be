@@ -1,15 +1,15 @@
 <?php
-function wpdocs_allowed_block_types( $block_editor_context, $editor_context ) {
-      if ( ! empty( $editor_context->post ) ) {
-            return array(
-                  'core/paragraph',
-                  'core/heading',
-                  'core/list',
-                  'hero-block', // Voeg je eigen blok hier toe
-            );
+function register_hero_block() {
+      if ( function_exists( 'acf_register_block' ) ) {
+            acf_register_block(array(
+                  'name'            => 'hero-block', // Hier gebruik je een specifieke naam die niet conflicteert
+                  'title'           => __('Hero Block'),
+                  'description'     => __('Een hero block met ACF-velden'),
+                  'render_template' => 'hero.php', // Zorg ervoor dat dit pad klopt
+                  'category'        => 'common',
+                  'icon'            => 'alignfull',
+                  'keywords'        => array( 'hero', 'header' ),
+            ));
       }
-
-      return $block_editor_context;
 }
-
-add_filter( 'allowed_block_types_all', 'wpdocs_allowed_block_types', 10, 2 );
+add_action('acf/init', 'register_hero_block');
