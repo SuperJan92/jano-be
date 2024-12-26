@@ -1,15 +1,22 @@
 <?php
-function register_acf_block_types() {
-      // Hero Block
-      acf_register_block_type(array(
-            'name'              => 'hero',
-            'title'             => __('Hero Block'),
-            'description'       => __('Een Hero block met een titel en tekst'),
-            'render_template'   => plugin_dir_path(__FILE__) . 'blocks/hero.php',
-            'category'          => 'formatting',
-            'icon'              => 'editor-alignleft', // Je kunt hier ook een icon kiezen
-            'keywords'          => array('hero', 'intro', 'cover'),
+// Register de REST API route
+function register_hero_rest_route() {
+      register_rest_route('my_namespace/v1', '/hero/', array(
+            'methods' => 'GET',
+            'callback' => 'get_hero_block',
       ));
 }
 
-add_action('acf/init', 'register_acf_block_types');
+// Haal de ACF velden op
+function get_hero_block() {
+      $hero_title = get_field('hero_title', 'option');
+      $hero_text = get_field('hero_text', 'option');
+
+      return rest_ensure_response(array(
+            'hero_title' => $hero_title,
+            'hero_text' => $hero_text,
+      ));
+}
+
+// Voeg de registratie toe aan 'rest_api_init' hook
+add_action('rest_api_init', 'register_hero_rest_route');
