@@ -2,7 +2,6 @@
 function wpdocs_allowed_block_types( $block_editor_context, $editor_context ) {
       if ( ! empty( $editor_context->post ) ) {
             return array(
-                  'core/paragraph',
                   'core/heading',
                   'core/list',
                   'heroblock', // Voeg je eigen blok hier toe
