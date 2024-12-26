@@ -284,5 +284,5 @@ add_action('admin_head', function () {
       <?php
 });
 
-include_once( plugin_dir_path( __FILE__ ) . 'Blocks/hero.php' );
+include_once( plugin_dir_path( __FILE__ ) . 'hero.php' );
 include_once( plugin_dir_path( __FILE__ ) . 'gutenberg.php' );
