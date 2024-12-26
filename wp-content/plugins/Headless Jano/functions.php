@@ -285,3 +285,4 @@ add_action('admin_head', function () {
 });
 
 include_once( plugin_dir_path( __FILE__ ) . 'Blocks/hero.php' );
+include_once( plugin_dir_path( __FILE__ ) . 'gutenberg.php' );
