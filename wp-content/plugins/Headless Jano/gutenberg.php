@@ -1,9 +1,12 @@
 <?php
 function debug_allowed_blocks( $allowed_blocks ) {
-      var_dump( $allowed_blocks );  // Dit toont alle beschikbare blokken
+      echo '<pre>';
+      var_dump( $allowed_blocks );  // Toont de array van toegestane blokken
+      echo '</pre>';
       return $allowed_blocks;
 }
 add_filter( 'allowed_block_types', 'debug_allowed_blocks' );
+
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
       remove_submenu_page( 'edit.php?post_type=wp_block', 'edit.php?post_type=wp_block' );
