@@ -1,10 +1,5 @@
 <?php
 
-function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      return array( 'heroo' ); // Zorg ervoor dat dit overeenkomt met de naam die je in acf_register_block gebruikt
-}
-add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
-
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
       remove_submenu_page( 'edit.php?post_type=wp_block', 'edit.php?post_type=wp_block' );
