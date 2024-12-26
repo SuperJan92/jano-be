@@ -3,7 +3,7 @@ function register_hero_block() {
       if ( function_exists( 'acf_register_block' ) ) {
             acf_register_block(array(
                   'name'            => 'heroblock',
-                  'title'           => __('Hero Block'),
+                  'title'           => __('Hero Blockk'),
                   'description'     => __('Een hero block met ACF-velden'),
                   'render_template' => 'block-hero.php', // Dit is het bestand voor jouw block-rendering
                   'category'        => 'common',
