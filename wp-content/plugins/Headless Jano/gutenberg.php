@@ -5,7 +5,7 @@ function debug_allowed_blocks( $allowed_blocks ) {
       echo '</pre>';
       return $allowed_blocks;
 }
-add_filter( 'allowed_block_types', 'debug_allowed_blocks' );
+add_filter( 'allowed_block_types_all', 'debug_allowed_blocks' );
 
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
