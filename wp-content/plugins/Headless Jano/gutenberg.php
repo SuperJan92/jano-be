@@ -1,6 +1,6 @@
 <?php
 // Dit is een debugregel
-echo 'REMOVE';
+echo 'REMOVEeeeeeee';
 
 // Alleen je eigen blokken toestaan in de editor
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
