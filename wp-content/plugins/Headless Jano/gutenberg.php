@@ -1,11 +1,13 @@
 <?php
-function debug_allowed_blocks( $allowed_blocks ) {
-      echo '<pre>';
-      var_dump( $allowed_blocks );  // Dit toont de inhoud van de array van toegestane blokken
-      echo '</pre>';
-      return $allowed_blocks;
+function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
+      // Zorg ervoor dat 'heroo' exact overeenkomt met de bloknaam
+      if ( is_array( $allowed_blocks ) ) {
+            error_log('Allowed blocks: ' . print_r($allowed_blocks, true));  // Debug: controleer welke blokken toegestaan zijn
+      }
+
+      return array( 'heroo' );  // Alleen jouw blok wordt weergegeven
 }
-add_filter( 'allowed_block_types_all', 'debug_allowed_blocks' );
+add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
 
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
