@@ -1,7 +1,7 @@
 <?php
 function debug_allowed_blocks( $allowed_blocks ) {
       echo '<pre>';
-      var_dump( $allowed_blocks );  // Toont de array van toegestane blokken
+      var_dump( $allowed_blocks );  // Dit toont de inhoud van de array van toegestane blokken
       echo '</pre>';
       return $allowed_blocks;
 }
