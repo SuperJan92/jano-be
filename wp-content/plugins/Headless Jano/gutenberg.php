@@ -1,6 +1,6 @@
 <?php
 // Dit is een debugregel
-echo 'REMOVEeeeeeee';
+echo 'REMOVEeeeeesfhksxfhsdlee';
 
 // Alleen je eigen blokken toestaan in de editor
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
@@ -13,12 +13,14 @@ function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
 
 add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
 
-// Verwijder Blokken, Patronen en Media uit het WordPress menu
-function remove_gutenberg_menu_items() {
-      // Verwijder de 'Blokken' en andere menu-items
-      remove_menu_page( 'edit.php?post_type=wp_block' ); // Blokken
-      remove_menu_page( 'edit.php?post_type=wp_pattern' ); // Patronen
-      remove_menu_page( 'upload.php' ); // Media
-}
+// Verwijder de Gutenberg zijbalk items (Blokken, Patronen, Media)
+function remove_gutenberg_sidebar_menu_items() {
+      // Verwijder het blokken paneel
+      remove_meta_box( 'block', 'post', 'normal' ); // Blokken
+      remove_meta_box( 'patterns', 'post', 'side' ); // Patronen
+      remove_meta_box( 'media-buttons', 'post', 'side' ); // Media
 
-add_action( 'admin_menu', 'remove_gutenberg_menu_items', 999 );
+      // Je kunt deze toevoegen voor andere post types indien nodig:
+      // remove_meta_box( 'block', 'page', 'normal' ); // Voor pagina's
+}
+add_action( 'add_meta_boxes', 'remove_gutenberg_sidebar_menu_items', 999 );
