@@ -12,3 +12,4 @@ function register_hero_block() {
             ));
       }
 }
+add_action('acf/init', 'register_hero_block');
