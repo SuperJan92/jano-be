@@ -1,5 +1,5 @@
 <?php
-echo '4';
+echo '5';
 function register_hero_block() {
       if ( function_exists( 'acf_register_block' ) ) {
             acf_register_block(array(
