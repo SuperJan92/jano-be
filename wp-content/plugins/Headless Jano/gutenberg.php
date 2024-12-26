@@ -1,15 +1,14 @@
 <?php
 // Dit is een debugregel
-echo 'Hero block filssssse loaded';
+echo 'REMOVE';
 
-// Zet alle Gutenberg blokken uit
-function disable_all_gutenberg_blocks() {
-      // Haal alle geregistreerde blokken op
-      global $wp_registered_blocks;
-
-      // Verwijder alle geregistreerde blokken
-      foreach ( $wp_registered_blocks as $block_name => $block ) {
-            unregister_block_type( $block_name );
-      }
+// Alleen je eigen blokken toestaan in de editor
+function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
+      // Voeg je eigen blokken toe aan de lijst van toegestane blokken
+      // Vervang 'my-plugin/hero' door de naam van je eigen blok
+      return array(
+            'my-plugin/hero', // Voeg hier je eigen blokken toe
+      );
 }
-add_action( 'wp_loaded', 'disable_all_gutenberg_blocks', 100 );
+
+add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
