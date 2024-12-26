@@ -1,9 +1,15 @@
 <?php
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      // Debug: Echo de lijst van toegestane blokken
-      echo '<pre>';
-      print_r($allowed_blocks);  // Dit toont de lijst van alle toegestane blokken
-      echo '</pre>';
+      // Debug: Check de waarde van $allowed_blocks
+      if ( is_array( $allowed_blocks ) ) {
+            echo '<pre>';
+            print_r($allowed_blocks);  // Print de lijst van alle toegestane blokken
+            echo '</pre>';
+      } else {
+            echo 'De waarde van $allowed_blocks is niet een array: ' . var_export( $allowed_blocks, true );
+      }
+
+      return array( 'heroo' );  // Alleen jouw blok wordt weergegeven
 }
 add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
 
