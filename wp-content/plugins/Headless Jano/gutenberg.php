@@ -8,7 +8,7 @@ function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
       // Alleen jouw blok zichtbaar maken
       return array( 'heroo' );  // Zorg ervoor dat 'heroo' overeenkomt met jouw bloknaam
 }
-add_filter( 'allowed_block_types', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
+add_filter( 'allowed_block_types', 'disable_all_gutenberg_blocks_except_own', 20, 1 );
 
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
