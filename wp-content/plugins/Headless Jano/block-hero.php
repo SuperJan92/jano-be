@@ -8,7 +8,7 @@ function register_hero_block() {
                   'category'        => 'common',
                   'icon'            => 'superhero',
                   'keywords'        => array( 'hero', 'header' ),
-                  'editor_script'   => 'empty-preview', // Specificeer een lege preview
+                  'mode' => 'edit',
             ));
       }
 }
