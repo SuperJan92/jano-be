@@ -1,6 +1,6 @@
 <?php
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      return array( 'hero-block' ); // Laat alleen je eigen blok zien
+      //return array( 'hero-block' ); // Laat alleen je eigen blok zien
 }
 add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
 
