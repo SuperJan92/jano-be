@@ -8,7 +8,7 @@ function register_hero_block() {
                   'category'        => 'common',
                   'icon'            => 'superhero',
                   'keywords'        => array( 'hero', 'header' ),
-                  'mode' => 'edit',
+                  'mode'            => 'edit',
             ));
       }
 }
