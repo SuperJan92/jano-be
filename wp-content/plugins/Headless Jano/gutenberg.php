@@ -1,5 +1,8 @@
 <?php
-
+function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
+      return array( 'Blocks/hero' ); // Zorg ervoor dat je de juiste naam gebruikt met hoofdletter B
+}
+add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
 
 function remove_gutenberg_admin_menu_items() {
       remove_submenu_page( 'edit.php?post_type=wp_block', 'edit.php?post_type=wp_block' );
