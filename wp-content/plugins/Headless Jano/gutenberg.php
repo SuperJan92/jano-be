@@ -1,7 +1,7 @@
 <?php
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
       // Alleen het custom blok zichtbaar maken
-      return array( 'heroo' ); // Zorg ervoor dat dit overeenkomt met de naam die je in acf_register_block gebruikt
+      return array( 'hero-block' ); // Zorg ervoor dat dit overeenkomt met de naam die je in acf_register_block gebruikt
 }
 add_filter( 'allowed_block_types', 'disable_all_gutenberg_blocks_except_own' );
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
