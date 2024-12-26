@@ -4,9 +4,6 @@ function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
       echo '<pre>';
       print_r($allowed_blocks);  // Dit toont de lijst van alle toegestane blokken
       echo '</pre>';
-
-      // Hier kun je de lijst verder aanpassen als je alleen bepaalde blokken wilt tonen
-      return array( 'heroo' );  // Alleen jouw blok wordt weergegeven
 }
 add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
 
