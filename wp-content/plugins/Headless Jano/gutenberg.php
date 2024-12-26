@@ -1,6 +1,6 @@
 <?php
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      return $allowed_blocks; // Zet het terug naar de standaard om te testen
+      return array( 'hero' ); // Zorg ervoor dat je hier de juiste naam gebruikt
 }
 add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
 
