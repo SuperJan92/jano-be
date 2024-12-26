@@ -1,9 +1,8 @@
 <?php
-// Alleen je eigen blokken toestaan in de editor
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      return array( 'Blocks/hero' ); // Zorg ervoor dat je blok naam correct is
+      return array( 'hero' ); // De naam van je blok zonder hoofdletters en met de juiste naam
 }
-//add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
+add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
 
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
