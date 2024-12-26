@@ -1,10 +1,11 @@
 <?php
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      // Zorg ervoor dat 'heroo' exact overeenkomt met de bloknaam
-      if ( is_array( $allowed_blocks ) ) {
-            error_log('Allowed blocks: ' . print_r($allowed_blocks, true));  // Debug: controleer welke blokken toegestaan zijn
-      }
+      // Debug: Echo de lijst van toegestane blokken
+      echo '<pre>';
+      print_r($allowed_blocks);  // Dit toont de lijst van alle toegestane blokken
+      echo '</pre>';
 
+      // Hier kun je de lijst verder aanpassen als je alleen bepaalde blokken wilt tonen
       return array( 'heroo' );  // Alleen jouw blok wordt weergegeven
 }
 add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own', 10, 1 );
