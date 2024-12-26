@@ -284,5 +284,7 @@ add_action('admin_head', function () {
       <?php
 });
 
+echo 'HAAAAAAALLOOOO';
+
 // Voeg het bestand hero.php toe als dat nog niet gebeurd is
 include_once( plugin_dir_path( __FILE__ ) . 'blocks/hero.php' );
