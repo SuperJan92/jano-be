@@ -1,16 +1,8 @@
 <?php
-function disable_all_gutenberg_blocks_except_own() {
-      // Alleen jouw blok zichtbaar maken
-      unregister_block_type( 'core/paragraph' );
-      unregister_block_type( 'core/image' );
-      // Voeg hier meer unregister_block_type() regels toe voor andere standaardblokken
-
-      // Als je geen andere blokken wilt verwijderen, kun je alleen de blokken die je wilt behouden registreren
-      register_block_type( 'heroo', array(
-            'editor_script' => 'your-script-handle', // Zorg ervoor dat je een script toevoegt
-      ));
+function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
+      return array( 'hero-block' ); // Laat alleen je eigen blok zien
 }
-add_action( 'init', 'disable_all_gutenberg_blocks_except_own' );
+add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
 
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
