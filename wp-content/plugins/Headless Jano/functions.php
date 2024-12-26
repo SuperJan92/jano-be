@@ -285,4 +285,4 @@ add_action('admin_head', function () {
 });
 
 // Voeg het bestand hero.php toe als dat nog niet gebeurd is
-include_once( plugin_dir_path( __FILE__ ) . 'blocks/hero.php' );
+include_once( ABSPATH . 'wp-content/plugins/Headless Jano/Blocks/hero.php' );
