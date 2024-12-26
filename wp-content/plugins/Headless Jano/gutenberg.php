@@ -1,21 +1,4 @@
 <?php
-function echo_all_registered_blocks() {
-      // Haal alle geregistreerde blokken op
-      $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
-
-      // Controleer of er blokken zijn en loop door de geregistreerde blokken
-      if (!empty($registered_blocks)) {
-            foreach ( $registered_blocks as $block_name => $block ) {
-                  echo '<p>' . esc_html( $block_name ) . '</p>';
-            }
-      } else {
-            echo '<p>No blocks registered.</p>';
-      }
-}
-
-// Voeg de functie toe aan een actie die wordt uitgevoerd in de admin, bijvoorbeeld 'admin_notices'
-add_action( 'admin_notices', 'echo_all_registered_blocks' );
-
 function wpdocs_allowed_block_types( $block_editor_context, $editor_context ) {
       if ( ! empty( $editor_context->post ) ) {
             return array(
