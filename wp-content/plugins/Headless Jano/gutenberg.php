@@ -1,6 +1,6 @@
 <?php
 function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      return array( 'Blocks/hero' ); // Zorg ervoor dat je de juiste naam gebruikt met hoofdletter B
+      return array( 'Blocks/hero' ); // 'Blocks/hero' met de juiste hoofdletter
 }
 add_filter( 'allowed_block_types_all', 'disable_all_gutenberg_blocks_except_own' );
 
