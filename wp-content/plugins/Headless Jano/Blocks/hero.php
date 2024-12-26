@@ -1,5 +1,5 @@
 <?php
-// Hero block registratie
+echo 'aaaa';
 function register_hero_block() {
       // Controleer of ACF aanwezig is
       if( function_exists('acf_register_block') ) {
