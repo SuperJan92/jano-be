@@ -1,9 +1,9 @@
 <?php
-function disable_all_gutenberg_blocks_except_own( $allowed_blocks ) {
-      // Alleen het custom blok zichtbaar maken
-      return array( 'hero-block' ); // Zorg ervoor dat dit overeenkomt met de naam die je in acf_register_block gebruikt
+function debug_allowed_blocks( $allowed_blocks ) {
+      var_dump( $allowed_blocks );  // Dit toont alle beschikbare blokken
+      return $allowed_blocks;
 }
-add_filter( 'allowed_block_types', 'disable_all_gutenberg_blocks_except_own' );
+add_filter( 'allowed_block_types', 'debug_allowed_blocks' );
 // Verwijder de submenu's (Blocks, Patterns, Media) uit de admin sidebar
 function remove_gutenberg_admin_menu_items() {
       remove_submenu_page( 'edit.php?post_type=wp_block', 'edit.php?post_type=wp_block' );
