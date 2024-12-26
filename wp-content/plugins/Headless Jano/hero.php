@@ -2,7 +2,7 @@
 function register_hero_block() {
       if ( function_exists( 'acf_register_block' ) ) {
             acf_register_block(array(
-                  'name'            => 'hero',
+                  'name'            => 'heroo',
                   'title'           => __('Hero Block'),
                   'description'     => __('Een hero block met ACF-velden'),
                   'render_template' => 'hero.php', // Zorg ervoor dat dit pad klopt
