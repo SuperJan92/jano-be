@@ -41,3 +41,37 @@ function remove_gutenberg_sidebar_tabs_css() {
       <?php
 }
 add_action( 'admin_head', 'remove_gutenberg_sidebar_tabs_css' );
+
+function get_gutenberg_blocks($data)
+{
+      $post_id = $data['id']; // Haal het ID op uit de URL
+      $post = get_post($post_id); // Haal de post of pagina op
+      $blocks = parse_blocks($post->post_content); // Split de blokken op
+
+      $block_data = [];
+      foreach ($blocks as $block) {
+            // Voeg alleen de blokken toe die je wilt (bijvoorbeeld ACF custom blocks)
+            if ($block['blockName']) {
+                  $block_data[] = [
+                        'blockName' => $block['blockName'],
+                        'content' => $block['innerHTML'], // Haal de HTML van het blok op
+                        'attributes' => $block['attrs'], // Extra data van het blok
+                  ];
+            }
+      }
+      return $block_data;
+}
+
+add_action('rest_api_init', function () {
+      register_rest_route('custom/v1', '/blocks/(?P<id>\d+)', array(
+            'methods' => 'GET',
+            'callback' => 'get_gutenberg_blocks',
+            'args' => array(
+                  'id' => array(
+                        'validate_callback' => function ($param) {
+                              return is_numeric($param);
+                        }
+                  ),
+            ),
+      ));
+});
