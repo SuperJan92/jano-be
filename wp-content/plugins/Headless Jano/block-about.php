@@ -2,9 +2,9 @@
 function register_hero_block() {
       if ( function_exists( 'acf_register_block' ) ) {
             acf_register_block(array(
-                  'name'            => 'heroblock',
-                  'title'           => __('Hero Block'),
-                  'description'     => __('Een hero block met ACF-velden'),
+                  'name'            => 'aboutblock',
+                  'title'           => __('About Block'),
+                  'description'     => __('Een block block met afbeelding'),
                   'category'        => 'common',
                   'icon'            => 'superhero',
                   'keywords'        => array( 'hero', 'header' ),
