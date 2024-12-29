@@ -286,3 +286,28 @@ add_action('admin_head', function () {
 
 include_once(plugin_dir_path(__FILE__) . 'blocks.php');
 include_once( plugin_dir_path( __FILE__ ) . 'gutenberg.php' );
+
+function add_menu_to_rest_api() {
+      register_rest_route('wp/v2', '/menus', array(
+            'methods' => 'GET',
+            'callback' => 'get_menus_for_api',
+            'permission_callback' => '__return_true', // Openbaar maken
+      ));
+}
+
+function get_menus_for_api() {
+      $menus = wp_get_nav_menus(); // Haalt alle menu's op
+      $menu_data = [];
+
+      foreach ($menus as $menu) {
+            $menu_data[] = [
+                  'id' => $menu->term_id,
+                  'name' => $menu->name,
+                  'slug' => $menu->slug,
+            ];
+      }
+
+      return $menu_data; // Retourneer de lijst van menu's
+}
+
+add_action('rest_api_init', 'add_menu_to_rest_api');
