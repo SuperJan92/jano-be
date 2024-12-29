@@ -295,6 +295,13 @@ function add_menu_to_rest_api() {
       ));
 }
 
+function add_menu_to_rest_api() {
+      register_rest_route('wp/v2', '/menus', [
+            'methods' => 'GET',
+            'callback' => 'get_menus_for_api',
+      ]);
+}
+
 function get_menus_for_api() {
       $menus = wp_get_nav_menus(); // Haalt alle menu's op
       $menu_data = [];
