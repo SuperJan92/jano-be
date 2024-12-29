@@ -295,3 +295,53 @@ function add_menu_to_rest_api() {
       ));
 }
 
+// Functie om menu's beschikbaar te maken in de REST API
+function get_menus_for_api() {
+      $menus = wp_get_nav_menus(); // Haalt alle menu's op
+      $menu_data = [];
+
+      foreach ($menus as $menu) {
+            $menu_data[] = [
+                  'id'   => $menu->term_id,
+                  'name' => $menu->name,
+                  'slug' => $menu->slug,
+            ];
+      }
+
+      return $menu_data; // Retourneer de lijst van menu's
+}
+
+// Registreer de REST API route voor het ophalen van menu's
+add_action('rest_api_init', function() {
+      register_rest_route('wp/v2', '/menus', [
+            'methods' => 'GET',
+            'callback' => 'get_menus_for_api',
+            'permission_callback' => '__return_true', // Openbaar maken
+      ]);
+});
+
+// Functie voor het ophalen van de menu-items
+function get_menu_items_for_api(WP_REST_Request $request) {
+      $menu_id = $request->get_param('id');
+      $menu_items = wp_get_nav_menu_items($menu_id);
+      $menu_items_data = [];
+
+      foreach ($menu_items as $item) {
+            $menu_items_data[] = [
+                  'id'    => $item->ID,
+                  'title' => $item->title,
+                  'url'   => $item->url,
+            ];
+      }
+
+      return $menu_items_data;
+}
+
+// Registreer de REST API route voor menu-items
+add_action('rest_api_init', function() {
+      register_rest_route('wp/v2', '/menus/(?P<id>\d+)/items', [
+            'methods' => 'GET',
+            'callback' => 'get_menu_items_for_api',
+            'permission_callback' => '__return_true', // Openbaar maken
+      ]);
+});
