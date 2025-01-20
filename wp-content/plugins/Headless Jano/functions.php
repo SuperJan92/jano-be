@@ -141,6 +141,14 @@ add_action('admin_menu', function() {
     );
 });
 
+add_action('admin_menu', function() {
+    global $menu;
+    echo '<pre>';
+    print_r($menu);
+    echo '</pre>';
+    exit;
+});
+
 add_action('admin_menu', function () {
       // Verwijder het "Comments" menu
       remove_menu_page('edit-comments.php');
