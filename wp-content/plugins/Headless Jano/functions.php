@@ -126,27 +126,14 @@ add_action('admin_menu', function() {
 });
 
 add_action('admin_menu', function() {
-    // Verwijder eventueel bestaande verwijzingen naar 'upload.php' om dubbele menu's te voorkomen
-    remove_menu_page('upload.php');
-
-    // Voeg het Media Overzicht-menu-item correct toe
-    add_menu_page(
-        'Media Overzicht',      // Titel van de pagina
-        'Media Overzicht',      // Titel in het admin menu
+    add_submenu_page(
+        'upload.php',           // Slug van het parent menu (Media)
+        'Media Overzicht',      // Titel van de subpagina
+        'Media Overzicht',      // Titel die in het submenu verschijnt
         'upload_files',         // Vereiste rechten
-        'upload.php',           // Slug van de pagina die naar het overzicht leidt
-        '',                     // Geen callback nodig
-        'dashicons-admin-media',// Icon voor het menu
-        10                      // Positie in het menu
+        'upload.php',           // Slug van de pagina
+        ''                      // Callback (geen extra inhoud nodig)
     );
-});
-
-add_action('admin_menu', function() {
-    global $menu;
-    echo '<pre>';
-    print_r($menu);
-    echo '</pre>';
-    exit;
 });
 
 add_action('admin_menu', function () {
