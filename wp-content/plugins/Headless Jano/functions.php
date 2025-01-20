@@ -126,16 +126,20 @@ add_action('admin_menu', function() {
 });
 
 add_action('admin_menu', function() {
+    // Verwijder het standaard Media-menu
+    remove_menu_page('upload.php');
+
+    // Voeg het Media-menu opnieuw toe
     add_menu_page(
-        'Media',           // Titel van de pagina
-        'Media',           // Titel in het admin menu
-        'upload_files',    // Vereiste rechten
-        'upload.php',      // Slug van de pagina
-        '',                // Geen callback nodig
-        'dashicons-admin-media', // Icon
-        10                 // Positie in het menu
+        'Media Overzicht',      // Titel van de pagina
+        'Media Overzicht',      // Titel in het admin menu
+        'upload_files',         // Vereiste rechten
+        'upload.php',           // Slug van de pagina
+        '',                     // Geen callback nodig
+        'dashicons-admin-media',// Icon voor het menu
+        10                      // Positie in het menu
     );
-});
+}, 99); // Laatste prioriteit om duplicaten te voorkomen
 
 add_action('admin_menu', function () {
       // Verwijder het "Comments" menu
