@@ -355,27 +355,31 @@ add_action('rest_api_init', function() {
 });
 
 // API Customizations
-add_action('rest_api_init', function () {
-    add_filter('rest_pre_dispatch', function ($result, $server, $request) {
-        // Maak een logbestand
-        $log_file = __DIR__ . '/api_calls.log';
+add_filter('rest_prepare_block', function ($response, $block, $request) {
+    $log_file = __DIR__ . '/api_calls.log'; // Zorg ervoor dat het bestand 'api_calls.log' toegankelijk is voor schrijven
 
-        // Log de methode, route, en parameters
-        $method = $request->get_method();
-        $route = $request->get_route();
-        $params = json_encode($request->get_params());
+    // Log een algemene melding dat het filter is getriggerd
+    file_put_contents($log_file, "rest_prepare_block triggered for block: {$block['blockName']}\n", FILE_APPEND);
 
-        // Schrijf de log naar het bestand
-        $log_entry = sprintf(
-            "[%s] Method: %s | Route: %s | Params: %s\n",
-            date('Y-m-d H:i:s'),
-            $method,
-            $route,
-            $params
-        );
+    // Controleer of het juiste blok wordt verwerkt
+    if ($block['blockName'] === 'acf/aboutblock') {
+        $data = $block['attributes']['data'] ?? [];
 
-        file_put_contents($log_file, $log_entry, FILE_APPEND);
+        // Log de data van het blok
+        file_put_contents($log_file, "Block data: " . print_r($data, true) . "\n", FILE_APPEND);
 
-        return $result; // Geef het resultaat terug
-    }, 10, 3);
-});
+        // Controleer of het veld 'about_image' bestaat
+        if (!empty($data['about_image'])) {
+            $image = wp_get_attachment_image_src($data['about_image'], 'full');
+            file_put_contents($log_file, "Image ID: {$data['about_image']}\n", FILE_APPEND);
+            file_put_contents($log_file, "Image URL: " . ($image ? $image[0] : 'No image found') . "\n", FILE_APPEND);
+
+            // Voeg de afbeelding-URL toe aan de API-respons
+            $block['attributes']['data']['about_image_url'] = $image ? $image[0] : null;
+        } else {
+            file_put_contents($log_file, "No about_image found in block data.\n", FILE_APPEND);
+        }
+    }
+
+    return $response;
+}, 10, 3);
