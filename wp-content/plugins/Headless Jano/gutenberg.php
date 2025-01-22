@@ -44,22 +44,33 @@ add_action( 'admin_head', 'remove_gutenberg_sidebar_tabs_css' );
 
 function get_gutenberg_blocks($data)
 {
-      $post_id = $data['id']; // Haal het ID op uit de URL
-      $post = get_post($post_id); // Haal de post of pagina op
-      $blocks = parse_blocks($post->post_content); // Split de blokken op
+    $post_id = $data['id'];
+    $post = get_post($post_id);
+    $blocks = parse_blocks($post->post_content);
 
-      $block_data = [];
-      foreach ($blocks as $block) {
-            // Voeg alleen de blokken toe die je wilt (bijvoorbeeld ACF custom blocks)
-            if ($block['blockName']) {
-                  $block_data[] = [
-                        'blockName' => $block['blockName'],
-                        'content' => $block['innerHTML'], // Haal de HTML van het blok op
-                        'attributes' => $block['attrs'], // Extra data van het blok
-                  ];
+    $block_data = [];
+    foreach ($blocks as $block) {
+        if ($block['blockName']) {
+            $block_info = [
+                'blockName' => $block['blockName'],
+                'content' => $block['innerHTML'],
+                'attributes' => $block['attrs'],
+            ];
+
+            // Specifieke aanpassing voor 'acf/aboutblock'
+            if ($block['blockName'] === 'acf/aboutblock' && !empty($block['attrs']['data']['about_image'])) {
+                $image_id = $block['attrs']['data']['about_image'];
+                $image_url = wp_get_attachment_image_url($image_id, 'full');
+
+                // Voeg de afbeelding-URL toe
+                $block_info['attributes']['data']['about_image_url'] = $image_url;
             }
-      }
-      return $block_data;
+
+            $block_data[] = $block_info;
+        }
+    }
+
+    return $block_data;
 }
 
 add_action('rest_api_init', function () {
