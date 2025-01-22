@@ -358,8 +358,8 @@ add_action('rest_api_init', function() {
 add_filter('rest_prepare_block', function ($response, $block, $request) {
     $log_file = __DIR__ . '/api_calls.log';
 
-    // Log een melding dat het filter wordt aangeroepen
-    file_put_contents($log_file, "rest_prepare_block is triggered!\n", FILE_APPEND);
+    // Log een algemene melding
+    file_put_contents($log_file, "Filter `rest_prepare_block` triggered!\n", FILE_APPEND);
 
     return $response;
 }, 10, 3);
