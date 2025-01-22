@@ -356,26 +356,8 @@ add_action('rest_api_init', function() {
 
 // API Customizations
 add_filter('rest_prepare_block', function ($response, $block, $request) {
-    $log_file = __DIR__ . '/api_calls.log'; // Gebruik hetzelfde logbestand
+    $log_file = __DIR__ . '/api_calls.log'; // Logbestand
+    file_put_contents($log_file, "[rest_prepare_block] Filter triggered.\n", FILE_APPEND);
 
-    // Log een melding dat het filter wordt uitgevoerd
-    file_put_contents($log_file, "[rest_prepare_block] Block: {$block['blockName']}\n", FILE_APPEND);
-
-    if ($block['blockName'] === 'acf/aboutblock') {
-        file_put_contents($log_file, "[rest_prepare_block] Processing aboutblock...\n", FILE_APPEND);
-
-        $data = $block['attributes']['data'] ?? [];
-
-        if (!empty($data['about_image'])) {
-            $image = wp_get_attachment_image_src($data['about_image'], 'full');
-            file_put_contents($log_file, "Image ID: {$data['about_image']}\n", FILE_APPEND);
-            file_put_contents($log_file, "Image URL: " . ($image ? $image[0] : 'No image found') . "\n", FILE_APPEND);
-
-            $block['attributes']['data']['about_image_url'] = $image ? $image[0] : null;
-        } else {
-            file_put_contents($log_file, "[rest_prepare_block] No about_image found.\n", FILE_APPEND);
-        }
-    }
-
-    return $response;
+    // Rest van de code
 }, 10, 3);
