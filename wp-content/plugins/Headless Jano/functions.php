@@ -355,7 +355,27 @@ add_action('rest_api_init', function() {
 });
 
 // API Customizations
-add_filter('rest_prepare_block', function ($response, $block, $request) {
-    error_log("rest_prepare_block is triggered!");
-    return $response;
-}, 10, 3);
+add_action('rest_api_init', function () {
+    add_filter('rest_pre_dispatch', function ($result, $server, $request) {
+        // Maak een logbestand
+        $log_file = __DIR__ . '/api_calls.log';
+
+        // Log de methode, route, en parameters
+        $method = $request->get_method();
+        $route = $request->get_route();
+        $params = json_encode($request->get_params());
+
+        // Schrijf de log naar het bestand
+        $log_entry = sprintf(
+            "[%s] Method: %s | Route: %s | Params: %s\n",
+            date('Y-m-d H:i:s'),
+            $method,
+            $route,
+            $params
+        );
+
+        file_put_contents($log_file, $log_entry, FILE_APPEND);
+
+        return $result; // Geef het resultaat terug
+    }, 10, 3);
+});
