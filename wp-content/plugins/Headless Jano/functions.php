@@ -355,38 +355,28 @@ add_action('rest_api_init', function() {
 });
 
 // API Customizations
-
-// Voeg een filter toe om blokgegevens aan te passen voordat ze worden geretourneerd in de REST API
+// API Customizations
 add_filter('rest_prepare_block', function ($response, $block, $request) {
-    $log_file = __DIR__ . '/debug.log'; // Pad naar het logbestand
+    // Log naar debug.log
+    error_log("Block filter triggered for block: " . $block['blockName']);
 
-    // Controleer of het filter wordt toegepast op het juiste blok
     if ($block['blockName'] === 'acf/aboutblock') {
         $data = $block['attributes']['data'] ?? [];
 
-        // Log dat het filter wordt getriggerd
-        file_put_contents($log_file, "Filter triggered for block: {$block['blockName']}\n", FILE_APPEND);
-
-        // Controleer of 'about_image' een ID bevat
+        // Controleer of 'about_image' een waarde heeft
         if (!empty($data['about_image'])) {
+            error_log("About image ID: " . $data['about_image']);
+
+            // Probeer de URL van de afbeelding op te halen
             $image = wp_get_attachment_image_src($data['about_image'], 'full');
+            error_log("Image URL: " . ($image ? $image[0] : 'No image found'));
 
-            // Log de afbeelding-ID en URL
-            file_put_contents($log_file, "Image ID: {$data['about_image']}\n", FILE_APPEND);
-            file_put_contents($log_file, "Image URL: " . ($image ? $image[0] : 'No image found') . "\n", FILE_APPEND);
-
-            // Voeg de URL van de afbeelding toe aan de API-response
+            // Voeg de URL toe aan de API-response
             $block['attributes']['data']['about_image_url'] = $image ? $image[0] : null;
         } else {
-            // Log als er geen 'about_image' is
-            file_put_contents($log_file, "No about_image found for block: {$block['blockName']}\n", FILE_APPEND);
+            error_log("No about_image ID found for block.");
         }
     }
 
     return $response;
 }, 10, 3);
-
-$test_log_file = __DIR__ . '/test.log';
-if (!file_put_contents($test_log_file, "Test log\n", FILE_APPEND)) {
-    error_log("Kan test.log niet aanmaken in: " . __DIR__);
-}
