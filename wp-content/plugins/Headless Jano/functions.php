@@ -356,21 +356,19 @@ add_action('rest_api_init', function() {
 
 // API Customizations
 add_filter('rest_prepare_block', function ($response, $block, $request) {
-    // Log om te testen of het filter wordt getriggerd
-    error_log("rest_prepare_block triggered for block: " . $block['blockName']);
+    // Algemene testlog om te zien of het filter wordt aangeroepen
+    error_log("rest_prepare_block is actief.");
 
+    // Controleer of dit specifiek voor acf/aboutblock is
     if ($block['blockName'] === 'acf/aboutblock') {
         $data = $block['attributes']['data'] ?? [];
 
         if (!empty($data['about_image'])) {
             $image = wp_get_attachment_image_src($data['about_image'], 'full');
-
-            // Log de afbeelding-ID en de opgehaalde URL
             error_log("Image ID: {$data['about_image']}");
             error_log("Image URL: " . ($image ? $image[0] : 'No image found'));
         } else {
-            // Log als er geen 'about_image' is
-            error_log("No about_image found in block data.");
+            error_log("Geen about_image gevonden in blokgegevens.");
         }
     }
 
