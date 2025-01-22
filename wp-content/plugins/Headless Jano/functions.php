@@ -371,22 +371,20 @@ add_action('rest_api_init', function () {
     ]);
 });
 
-function get_blocks_with_image_urls(WP_REST_Request $request) {
-    $post_id = $request->get_param('id');
-    $blocks = parse_blocks(get_post_field('post_content', $post_id));
+add_filter('rest_prepare_block', function ($response, $block, $request) {
+    // Controleer of het om het juiste blok gaat
+    if ($block['blockName'] === 'acf/aboutblock') {
+        $data = $block['attributes']['data'] ?? [];
 
-    // Verwerk blokken en voeg afbeeldings-URL toe
-    $processed_blocks = array_map(function ($block) {
-        if ($block['blockName'] === 'acf/aboutblock') {
-            $data = $block['attrs']['data'] ?? [];
+        // Controleer of 'about_image' een ID bevat
+        if (!empty($data['about_image'])) {
+            // Haal de afbeeldings-URL op
+            $image = wp_get_attachment_image_src($data['about_image'], 'full');
 
-            if (!empty($data['about_image'])) {
-                $image = wp_get_attachment_image_src($data['about_image'], 'full');
-                $block['attrs']['data']['about_image_url'] = $image ? $image[0] : null;
-            }
+            // Voeg de URL toe aan de API-respons
+            $block['attributes']['data']['about_image_url'] = $image ? $image[0] : null;
         }
-        return $block;
-    }, $blocks);
+    }
 
-    return rest_ensure_response($processed_blocks);
-}
+    return $response;
+}, 10, 3);
