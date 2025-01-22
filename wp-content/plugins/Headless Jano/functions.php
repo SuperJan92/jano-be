@@ -355,7 +355,4 @@ add_action('rest_api_init', function() {
 });
 
 // API Customizations
-add_filter('rest_prepare_block', function ($response, $block, $request) {
-    error_log("rest_prepare_block triggered"); // Basiscontrole
-    return $response;
-}, 10, 3);
+error_log("Debug log test: Debugging is actief.");
