@@ -59,10 +59,10 @@ function get_gutenberg_blocks($data)
             ];
 
             // Controleer of er een afbeelding is en voeg de URL toe
-            if (isset($block['attrs']['about_image'])) {
-                $image_id = $block['attrs']['about_image'];
+            if (isset($block['attrs']['data']['about_image'])) {
+                $image_id = $block['attrs']['data']['about_image'];
                 $image_url = wp_get_attachment_url($image_id); // Haal de URL van de afbeelding op
-                $block_item['attributes']['about_image_url'] = $image_url;
+                $block_item['attributes']['data']['about_image_url'] = $image_url;
             }
 
             $block_data[] = $block_item;
