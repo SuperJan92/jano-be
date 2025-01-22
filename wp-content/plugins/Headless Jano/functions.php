@@ -50,7 +50,7 @@ function trigger_netlify_build($post_id, $post, $update) {
     $message = "Post ID: $post_id | Post Type: {$post->post_type} | Update: " . ($update ? 'true' : 'false') . "\n";
     file_put_contents($log_file, $message, FILE_APPEND);
 
-    if ('post' === $post->post_type && $update) {
+    if (in_array($post->post_type, ['post', 'page'], true) && $update) {
         $webhook_url = $_ENV['NETLIFY_WEBHOOK_URL'] ?? 'Not set';
 
         // Log de Webhook URL
