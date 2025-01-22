@@ -353,3 +353,20 @@ add_action('rest_api_init', function() {
             'permission_callback' => '__return_true', // Openbaar maken
       ]);
 });
+
+// API Customizations
+add_filter('rest_prepare_block', function ($response, $block, $request) {
+    // Controleer of dit het juiste blok is
+    if ($block['blockName'] === 'acf/aboutblock') {
+        $data = $block['attributes']['data'] ?? [];
+
+        // Controleer of het veld 'about_image' een ID bevat
+        if (!empty($data['about_image'])) {
+            $image = wp_get_attachment_image_src($data['about_image'], 'full');
+            // Voeg de URL toe aan de API-response
+            $block['attributes']['data']['about_image_url'] = $image ? $image[0] : null;
+        }
+    }
+
+    return $response;
+}, 10, 3);
