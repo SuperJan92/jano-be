@@ -44,30 +44,18 @@ add_action('rest_api_init', function() {
 add_action('save_post', 'trigger_netlify_build', 10, 3);
 
 function trigger_netlify_build($post_id, $post, $update) {
-    $log_file = __DIR__ . '/save_post_test.log';
-
-    // Algemene logging
-    $message = "Post ID: $post_id | Post Type: {$post->post_type} | Update: " . ($update ? 'true' : 'false') . "\n";
-    file_put_contents($log_file, $message, FILE_APPEND);
-
+    // Controleer of het een bericht of pagina is, en of het een update betreft
     if (in_array($post->post_type, ['post', 'page'], true) && $update) {
-        $webhook_url = $_ENV['NETLIFY_WEBHOOK_URL'] ?? 'Not set';
-
-        // Log de Webhook URL
-        file_put_contents($log_file, "NETLIFY_WEBHOOK_URL: $webhook_url\n", FILE_APPEND);
+        $webhook_url = $_ENV['NETLIFY_WEBHOOK_URL'] ?? '';
 
         if (!empty($webhook_url)) {
-            file_put_contents($log_file, "Triggering webhook...\n", FILE_APPEND);
-
-            $response = wp_remote_post($webhook_url, [
+            wp_remote_post($webhook_url, [
                 'method'    => 'POST',
                 'body'      => json_encode(['trigger' => 'post_update']),
                 'headers'   => [
                     'Content-Type' => 'application/json',
                 ],
             ]);
-
-            file_put_contents($log_file, "Response: " . print_r($response, true) . "\n", FILE_APPEND);
         }
     }
 }
