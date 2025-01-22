@@ -355,27 +355,27 @@ add_action('rest_api_init', function() {
 });
 
 // API Customizations
-add_action('rest_api_init', function () {
-    add_filter('rest_pre_dispatch', function ($result, $server, $request) {
-        // Maak een logbestand
-        $log_file = __DIR__ . '/api_calls.log';
+add_filter('rest_prepare_block', function ($response, $block, $request) {
+    $log_file = __DIR__ . '/api_calls.log'; // Gebruik hetzelfde logbestand
 
-        // Log de methode, route, en parameters
-        $method = $request->get_method();
-        $route = $request->get_route();
-        $params = json_encode($request->get_params());
+    // Log een melding dat het filter wordt uitgevoerd
+    file_put_contents($log_file, "[rest_prepare_block] Block: {$block['blockName']}\n", FILE_APPEND);
 
-        // Schrijf de log naar het bestand
-        $log_entry = sprintf(
-            "[%s] Method: %s | Route: %s | Params: %s\n",
-            date('Y-m-d H:i:s'),
-            $method,
-            $route,
-            $params
-        );
+    if ($block['blockName'] === 'acf/aboutblock') {
+        file_put_contents($log_file, "[rest_prepare_block] Processing aboutblock...\n", FILE_APPEND);
 
-        file_put_contents($log_file, $log_entry, FILE_APPEND);
+        $data = $block['attributes']['data'] ?? [];
 
-        return $result; // Geef het resultaat terug
-    }, 10, 3);
-});
+        if (!empty($data['about_image'])) {
+            $image = wp_get_attachment_image_src($data['about_image'], 'full');
+            file_put_contents($log_file, "Image ID: {$data['about_image']}\n", FILE_APPEND);
+            file_put_contents($log_file, "Image URL: " . ($image ? $image[0] : 'No image found') . "\n", FILE_APPEND);
+
+            $block['attributes']['data']['about_image_url'] = $image ? $image[0] : null;
+        } else {
+            file_put_contents($log_file, "[rest_prepare_block] No about_image found.\n", FILE_APPEND);
+        }
+    }
+
+    return $response;
+}, 10, 3);
