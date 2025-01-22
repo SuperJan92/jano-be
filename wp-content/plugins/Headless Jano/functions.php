@@ -355,31 +355,38 @@ add_action('rest_api_init', function() {
 });
 
 // API Customizations
-add_filter('rest_prepare_block', function ($response, $block, $request) {
-    $log_file = __DIR__ . '/debug.log'; // Bestand waar je logs wilt opslaan
 
-    // Controleer of dit het juiste blok is
+// Voeg een filter toe om blokgegevens aan te passen voordat ze worden geretourneerd in de REST API
+add_filter('rest_prepare_block', function ($response, $block, $request) {
+    $log_file = __DIR__ . '/debug.log'; // Pad naar het logbestand
+
+    // Controleer of het filter wordt toegepast op het juiste blok
     if ($block['blockName'] === 'acf/aboutblock') {
         $data = $block['attributes']['data'] ?? [];
 
-        // Voeg log toe voor het triggeren van het filter
-        file_put_contents($log_file, "rest_prepare_block triggered for: acf/aboutblock\n", FILE_APPEND);
+        // Log dat het filter wordt getriggerd
+        file_put_contents($log_file, "Filter triggered for block: {$block['blockName']}\n", FILE_APPEND);
 
-        // Controleer of het veld 'about_image' een ID bevat
+        // Controleer of 'about_image' een ID bevat
         if (!empty($data['about_image'])) {
             $image = wp_get_attachment_image_src($data['about_image'], 'full');
 
-            // Log het resultaat van wp_get_attachment_image_src
+            // Log de afbeelding-ID en URL
             file_put_contents($log_file, "Image ID: {$data['about_image']}\n", FILE_APPEND);
             file_put_contents($log_file, "Image URL: " . ($image ? $image[0] : 'No image found') . "\n", FILE_APPEND);
 
-            // Voeg de URL toe aan de API-response
+            // Voeg de URL van de afbeelding toe aan de API-response
             $block['attributes']['data']['about_image_url'] = $image ? $image[0] : null;
         } else {
-            // Log als 'about_image' leeg is
-            file_put_contents($log_file, "No about_image found\n", FILE_APPEND);
+            // Log als er geen 'about_image' is
+            file_put_contents($log_file, "No about_image found for block: {$block['blockName']}\n", FILE_APPEND);
         }
     }
 
     return $response;
 }, 10, 3);
+
+$test_log_file = __DIR__ . '/test.log';
+if (!file_put_contents($test_log_file, "Test log\n", FILE_APPEND)) {
+    error_log("Kan test.log niet aanmaken in: " . __DIR__);
+}
