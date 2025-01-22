@@ -45,46 +45,29 @@ add_action('save_post', 'trigger_netlify_build', 10, 3);
 
 function trigger_netlify_build($post_id, $post, $update) {
     $log_file = __DIR__ . '/save_post_test.log';
-    $message = "Post ID: $post_id | Update: " . ($update ? 'true' : 'false') . "\n";
+
+    // Algemene logging
+    $message = "Post ID: $post_id | Post Type: {$post->post_type} | Update: " . ($update ? 'true' : 'false') . "\n";
     file_put_contents($log_file, $message, FILE_APPEND);
 
-    // Voorkom acties voor autosaves of revisies
-    if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) {
-        file_put_contents($log_file, "Skipped: Autosave or Revision\n", FILE_APPEND);
-        return;
-    }
-
-    // Zorg ervoor dat het bericht is gepubliceerd
-    if ('publish' !== get_post_status($post_id)) {
-        file_put_contents($log_file, "Skipped: Post not published\n", FILE_APPEND);
-        return;
-    }
-
     if ('post' === $post->post_type && $update) {
-        $webhook_url = $_ENV['NETLIFY_WEBHOOK_URL'] ?? '';
+        $webhook_url = $_ENV['NETLIFY_WEBHOOK_URL'] ?? 'Not set';
 
-        file_put_contents($log_file, "Webhook URL: $webhook_url\n", FILE_APPEND);
+        // Log de Webhook URL
+        file_put_contents($log_file, "NETLIFY_WEBHOOK_URL: $webhook_url\n", FILE_APPEND);
 
-        if (empty($webhook_url)) {
-            file_put_contents($log_file, "Error: Webhook URL is empty.\n", FILE_APPEND);
-            return;
-        }
+        if (!empty($webhook_url)) {
+            file_put_contents($log_file, "Triggering webhook...\n", FILE_APPEND);
 
-        file_put_contents($log_file, "Triggering webhook...\n", FILE_APPEND);
+            $response = wp_remote_post($webhook_url, [
+                'method'    => 'POST',
+                'body'      => json_encode(['trigger' => 'post_update']),
+                'headers'   => [
+                    'Content-Type' => 'application/json',
+                ],
+            ]);
 
-        $response = wp_remote_post($webhook_url, [
-            'method'    => 'POST',
-            'body'      => json_encode(['trigger' => 'post_update']),
-            'headers'   => [
-                'Content-Type' => 'application/json',
-            ],
-        ]);
-
-        if (is_wp_error($response)) {
-            $error_message = $response->get_error_message();
-            file_put_contents($log_file, "Webhook Error: $error_message\n", FILE_APPEND);
-        } else {
-            file_put_contents($log_file, "Webhook Response Code: " . wp_remote_retrieve_response_code($response) . "\n", FILE_APPEND);
+            file_put_contents($log_file, "Response: " . print_r($response, true) . "\n", FILE_APPEND);
         }
     }
 }
