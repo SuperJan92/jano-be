@@ -44,17 +44,21 @@ add_action('rest_api_init', function() {
 add_action('save_post', 'trigger_netlify_build', 10, 3);
 
 function trigger_netlify_build($post_id, $post, $update) {
-    // Controleer of het een bericht is en of de post gepubliceerd is
+    // Test of deze functie wordt aangeroepen
+    $log_file = __DIR__ . '/save_post_test.log';
+    $message = "Post ID: $post_id | Update: $update\n";
+    file_put_contents($log_file, $message, FILE_APPEND);
+
     if ('post' === $post->post_type && $update) {
-        // Haal de Netlify Webhook URL op uit de .env
         $webhook_url = $_ENV['NETLIFY_WEBHOOK_URL'];
 
-        // Debug de URL
-        var_dump($webhook_url); // Controleer wat hier uitkomt
+        // Log de Webhook URL
+        file_put_contents($log_file, "Webhook URL: $webhook_url\n", FILE_APPEND);
 
-        // Zorg ervoor dat de URL beschikbaar is
         if (!empty($webhook_url)) {
-            // Verstuur de webhook naar Netlify om de build te triggeren
+            // Log dat de webhook wordt aangeroepen
+            file_put_contents($log_file, "Triggering webhook...\n", FILE_APPEND);
+
             $response = wp_remote_post($webhook_url, [
                 'method'    => 'POST',
                 'body'      => json_encode(['trigger' => 'post_update']),
@@ -63,13 +67,11 @@ function trigger_netlify_build($post_id, $post, $update) {
                 ],
             ]);
 
-            // Debug de response van wp_remote_post
-            var_dump($response);
+            // Log de response
+            file_put_contents($log_file, "Response: " . print_r($response, true) . "\n", FILE_APPEND);
         }
     }
 }
-
-var_dump($_ENV['NETLIFY_WEBHOOK_URL']);
 
 // Zorg ervoor dat de standaard WordPress backend geen restricties heeft
 add_action('template_redirect', function() {
