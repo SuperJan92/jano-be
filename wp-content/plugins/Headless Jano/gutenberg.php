@@ -50,7 +50,6 @@ function get_gutenberg_blocks($data)
 
     $block_data = [];
     foreach ($blocks as $block) {
-        // Voeg alleen de blokken toe die je wilt (bijvoorbeeld ACF custom blocks)
         if ($block['blockName']) {
             $block_item = [
                 'blockName' => $block['blockName'],
@@ -58,11 +57,26 @@ function get_gutenberg_blocks($data)
                 'attributes' => $block['attrs'], // Extra data van het blok
             ];
 
-            // Controleer of er een afbeelding is en voeg de URL toe
             if (isset($block['attrs']['data']['about_image'])) {
                 $image_id = $block['attrs']['data']['about_image'];
                 $image_url = wp_get_attachment_url($image_id); // Haal de URL van de afbeelding op
                 $block_item['attributes']['data']['about_image_url'] = $image_url;
+            }
+
+            if (isset($block['attrs']['data']['about_text'])) {
+                $about_text = $block['attrs']['data']['about_text'];
+                $block_item['attributes']['data']['about_text'] = nl2br($about_text);
+            }
+
+            if (isset($block['attrs']['data']['bullet_list'])) {
+                $repeater_items = [];
+                $bullet_list = get_field('bullet_list', $post_id); // Ophalen ACF repeater veld
+                if ($bullet_list) {
+                    foreach ($bullet_list as $item) {
+                        $repeater_items[] = $item['item']; // Voeg elk item toe
+                    }
+                }
+                $block_item['attributes']['data']['bullet_list'] = $repeater_items;
             }
 
             $block_data[] = $block_item;
@@ -70,6 +84,20 @@ function get_gutenberg_blocks($data)
     }
     return $block_data;
 }
+
+add_action('rest_api_init', function () {
+    register_rest_route('custom/v1', '/blocks/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'get_gutenberg_blocks',
+        'args' => array(
+            'id' => array(
+                'validate_callback' => function ($param) {
+                    return is_numeric($param);
+                }
+            ),
+        ),
+    ));
+});
 
 add_action('rest_api_init', function () {
     register_rest_route('custom/v1', '/blocks/(?P<id>\d+)', array(
