@@ -57,17 +57,22 @@ function get_gutenberg_blocks($data)
                 'attributes' => $block['attrs'], // Extra data van het blok
             ];
 
+            // Verwerk about_image
             if (isset($block['attrs']['data']['about_image'])) {
                 $image_id = $block['attrs']['data']['about_image'];
                 $image_url = wp_get_attachment_url($image_id); // Haal de URL van de afbeelding op
                 $block_item['attributes']['data']['about_image_url'] = $image_url;
             }
 
+            // Verwerk about_text zonder ongewenste <br>-tags
             if (isset($block['attrs']['data']['about_text'])) {
                 $about_text = $block['attrs']['data']['about_text'];
-                $block_item['attributes']['data']['about_text'] = nl2br($about_text);
+                // Verwijder ongewenste <br>-tags
+                $about_text = str_replace(['<br>', '<br/>', '<br />'], '', $about_text);
+                $block_item['attributes']['data']['about_text'] = $about_text;
             }
 
+            // Verwerk repeater veld bullet_list
             if (isset($block['attrs']['data']['bullet_list'])) {
                 $repeater_items = [];
                 $bullet_list = get_field('bullet_list', $post_id); // Ophalen ACF repeater veld
@@ -84,7 +89,6 @@ function get_gutenberg_blocks($data)
     }
     return $block_data;
 }
-
 add_action('rest_api_init', function () {
     register_rest_route('custom/v1', '/blocks/(?P<id>\d+)', array(
         'methods' => 'GET',
