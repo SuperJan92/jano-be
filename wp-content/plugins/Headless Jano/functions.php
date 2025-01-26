@@ -13,18 +13,13 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(ABSPATH);
 $dotenv->load();
 
-// Haal de API key op uit het .env bestand, of gebruik een fallback als deze niet is gedefinieerd
 $api_key = $_ENV['MY_API_KEY'] ?? null;
 
 function check_api_key() {
-      // Controleer of het verzoek een REST API-verzoek is
       if (defined('REST_REQUEST') && REST_REQUEST) {
-            // Als de gebruiker ingelogd is, doe de API-key check dan niet
             if (!is_user_logged_in()) {
-                  // Haal de API key op uit de custom header 'X-API-KEY'
                   $api_key = $_SERVER['HTTP_X_API_KEY'] ?? '';
 
-                  // Controleer of de API key klopt
                   if ($api_key !== $_ENV['MY_API_KEY']) {
                         wp_send_json_error(['message' => 'Unauthorized, invalid API key.'], 401); // Stuur een 401 fout als de sleutel ongeldig is
                   }
@@ -33,9 +28,7 @@ function check_api_key() {
 }
 
 add_action('rest_api_init', function() {
-      // Voeg de API key verificatie toe aan de REST API voor specifieke endpoints
       add_filter('rest_pre_dispatch', function($response, $server, $request) {
-            // Alleen de check uitvoeren voor REST API-aanroepen als de gebruiker niet is ingelogd
             check_api_key();
             return $response;
       }, 10, 3);
@@ -59,7 +52,6 @@ function trigger_netlify_build($post_id, $post, $update) {
     }
 }
 
-// Zorg ervoor dat de standaard WordPress backend geen restricties heeft
 add_action('template_redirect', function() {
       if (!is_admin() && !is_login_page()) {
             wp_redirect(admin_url());
@@ -67,7 +59,6 @@ add_action('template_redirect', function() {
       }
 });
 
-// Functie om te controleren of het de login-pagina is
 function is_login_page() {
       return isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false;
 }
@@ -90,13 +81,10 @@ add_action('admin_menu', function () {
       remove_menu_page('themes.php');
 });
 
-// Voeg ondersteuning voor menu's toe
 add_theme_support('menus');
 
-// Voeg ondersteuning voor widgets toe
 add_theme_support('widgets');
 
-// Verberg de "Manage with Live Preview" knop
 add_action('admin_footer', function() {
       ?>
       <script type="text/javascript">
@@ -112,23 +100,23 @@ add_action('admin_footer', function() {
 
 add_action('admin_menu', function() {
       add_menu_page(
-            'Menu Beheer',       // Titel van de pagina
-            'Menu\'s',           // Titel in het admin menu
-            'manage_options',    // Vereiste capaciteit
-            'nav-menus.php',     // Het bestand dat de pagina laadt
-            '',                  // Functie om inhoud te laden (leeg laten)
-            'dashicons-menu'     // Icon voor het menu
+            'Menu Beheer',
+            'Menu\'s',
+            'manage_options',
+            'nav-menus.php',
+            '',
+            'dashicons-menu'
       );
 });
 
 add_action('admin_menu', function() {
     add_submenu_page(
-        'upload.php',           // Slug van het parent menu (Media)
-        'Media Overzicht',      // Titel van de subpagina
-        'Media Overzicht',      // Titel die in het submenu verschijnt
-        'upload_files',         // Vereiste rechten
-        'upload.php',           // Slug van de pagina
-        ''                      // Callback (geen extra inhoud nodig)
+        'upload.php',
+        'Media Overzicht',
+        'Media Overzicht',
+        'upload_files',
+        'upload.php',
+        ''
     );
 });
 
@@ -359,13 +347,5 @@ add_action('rest_api_init', function () {
         'methods'  => 'GET',
         'callback' => 'get_blocks_with_image_urls',
         'permission_callback' => '__return_true', // Openbaar maken
-    ]);
-});
-
-add_action('rest_api_init', function () {
-    register_rest_route('custom/v1', '/blocks/(?P<id>\d+)', [
-        'methods'  => 'GET',
-        'callback' => 'get_blocks_with_image_urls',
-        'permission_callback' => '__return_true',
     ]);
 });

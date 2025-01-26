@@ -1,7 +1,7 @@
 <?php
 function register_custom_blocks() {
       if ( function_exists( 'acf_register_block' ) ) {
-            // Registratie van About Block
+
             acf_register_block(array(
                   'name'            => 'aboutblock',
                   'title'           => __('About Block'),
@@ -12,7 +12,6 @@ function register_custom_blocks() {
                   'mode'            => 'edit',
             ));
 
-            // Registratie van Hero Block
             acf_register_block(array(
                   'name'            => 'heroblock',
                   'title'           => __('Hero Block'),
@@ -22,8 +21,8 @@ function register_custom_blocks() {
                   'keywords'        => array( 'hero', 'header' ),
                   'mode'            => 'edit',
             ));
-              // Registratie van Hero Block
-              acf_register_block(array(
+
+            acf_register_block(array(
                   'name'            => 'contactblock',
                   'title'           => __('Contact Block'),
                   'description'     => __('Een contact block'),
