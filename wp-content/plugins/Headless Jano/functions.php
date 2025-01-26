@@ -44,7 +44,6 @@ add_action('rest_api_init', function() {
 add_action('save_post', 'trigger_netlify_build', 10, 3);
 
 function trigger_netlify_build($post_id, $post, $update) {
-    // Controleer of het een bericht of pagina is, en of het een update betreft
     if (in_array($post->post_type, ['post', 'page'], true) && $update) {
         $webhook_url = $_ENV['NETLIFY_WEBHOOK_URL'] ?? '';
 
