@@ -27,7 +27,7 @@ function register_custom_blocks() {
                   'title'           => __('Contact Block'),
                   'description'     => __('Een contact block'),
                   'category'        => 'common',
-                  'icon'            => 'links',
+                  'icon'            => 'info',
                   'keywords'        => array( 'hero', 'header' ),
                   'mode'            => 'edit',
               ));
